@@ -93,12 +93,8 @@ nextApp.prepare().then(() => {
                 req.session.userId = result.insertedId.toString();
                 req.session.username = username;
 
-                //it technically doesnt get here, but the logic is already in catch
-                return res.status(201).send(`
-        <h2>Account created!</h2>
-        <p>Redirecting to waitlist form.</p>
-        <script>setTimeout(() => window.location.href = '/main', 2000);</script>
-      `);
+                //it technically doesn't get here, but the logic is already in catch
+                return res.status(201).json({success: true, message: "Account created!", redirect: "/main"});
             }
 
             //Password and Username Check
@@ -107,16 +103,18 @@ nextApp.prepare().then(() => {
                 req.session.login = true;
                 req.session.userId = user._id.toString();
                 console.log("Session:", req.session)
-                return res.redirect('/main'); //redirect to main after successful attempt
-            } else { //failed password check
-                return res.redirect('/?msg=' + encodeURIComponent('Incorrect password'));
 
+                return res.status(200).json({success: true, message: "Login successful", redirect: "/main"
+                });
+            } else { //failed password check
+                return res.status(200).json({success: true, message: "Login successful", redirect: "/main"
+                });
             }
         }
             //The username is not found, this is redirect
         catch (err) {
-            return res.redirect('/?msg=' + encodeURIComponent('Account not found. Created a new one for you!'));
-        }
+            return res.status(500).json({success: false, message: "Account not found. Created a new one for you!"
+            });        }
     })
 
     //Log out

@@ -1,19 +1,61 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  //Message to say if we don't have account or not logged in correctly
+  const [message, setMessage] = useState('');
+  const router = useRouter();
+
   useEffect(() => {
+    //send the meesage with a timer for view
     const params = new URLSearchParams(window.location.search);
     const msg = params.get('msg');
-    const messageDiv = document.getElementById('message');
-    if (msg && messageDiv) {
-      messageDiv.textContent = msg;
+    if (msg) {
+      setMessage(msg);
       setTimeout(() => {
-        messageDiv.textContent = '';
-      }, 2000);
+        setMessage('');
+      }, 3000);
     }
   }, []);
+
+  //handle our submit functionality, same thing as in server.js , just simpler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const loginData = new FormData(e.target);
+    const username = loginData.get('username');
+    const password = loginData.get('password');
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        if (result.message === "Account created!") {
+          setMessage('Account created! ');
+          setTimeout(() => router.push('/main'), 2000);
+        } else {
+          // Successful login
+          router.push('/main');
+        }
+      } else {
+        // Handle error responses
+        setMessage(result.message || 'Login failed.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setMessage('Error occurred.');
+    }
+  };
 
   return (
       <div className="bg-white w-1/2 justify-center flex flex-col m-auto">
@@ -24,7 +66,7 @@ export default function Home() {
               <h1 className="font-bold text-2xl">Northstar Cafe</h1>
             </div>
           </div>
-          <form className="w-1/2 m-auto pt-10" action="/login" method="POST">
+          <form className="w-1/2 m-auto pt-10" onSubmit={handleSubmit}>
             <label htmlFor="username" className="text-md mb-2 text-[#5E718E]">
               Username<span className="text-[#ef4444]"> *</span>
             </label>
@@ -61,10 +103,11 @@ export default function Home() {
           </form>
           <br />
           <br />
-          <div
-              id="message"
-              className="mt-10 w-1/2 m-auto text-center text-red-600 flex justify-center"
-          ></div>
+          {message && (
+              <div className="mt-10 w-1/2 m-auto text-center text-red-600 flex justify-center">
+                {message}
+              </div>
+          )}
         </div>
       </div>
   );
