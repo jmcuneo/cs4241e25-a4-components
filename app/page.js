@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 export default function Home() {
   //Message to say if we don't have account or not logged in correctly
@@ -62,7 +63,7 @@ export default function Home() {
         <div className="pt-20">
           <div className="flex items-center m-auto gap-4 justify-center">
             <div className="flex gap-4 items-center m-auto">
-              <img id="northstar" src="/northstar.jpg" alt="northstar" className="w-12 h-12" />
+              <Image id="northstar" src="/northstar.jpg" alt="northstar" width={50} height={50} />
               <h1 className="font-bold text-2xl">Northstar Cafe</h1>
             </div>
           </div>

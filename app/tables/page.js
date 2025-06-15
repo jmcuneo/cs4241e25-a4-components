@@ -1,5 +1,6 @@
 'use client';
 import {useEffect} from 'react';
+import Image from "next/image";
 
 export default function TablesPage() {
 
@@ -123,7 +124,7 @@ export default function TablesPage() {
             {/* Header */}
             <div className="flex items-center m-auto gap-4 justify-between">
                 <div className="flex gap-4 items-center">
-                    <img id="northstar" src="/northstar.jpg" alt="northstar" className="w-12 h-12"/>
+                    <Image id="northstar" src="/northstar.jpg" alt="northstar" width={50} height={50} />
                     <h1 className="font-bold text-2xl">Northstar Cafe</h1>
                 </div>
                 <a
