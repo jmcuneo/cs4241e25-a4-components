@@ -1,6 +1,85 @@
 'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 export default function MainPage() {
+
+    const [submitting, setSubmitting] = useState(false);
+    const router = useRouter();
+
+    /*
+      assignDrinkPersona divides up the alphabet in 4 quadrants. Based on the form entry's first name, it gets assigned a quadrant, and it then becomes their persona.
+     */
+    function assignDrinkPersona(firstName) {
+        const firstChar = firstName?.[0].toUpperCase();
+        let persona = "";
+
+        if (firstChar >= 'A' && firstChar <= 'F') persona = "Strawberry Matcha";
+        else if (firstChar >= 'G' && firstChar <= 'L') persona = "Brown Sugar Cold Brew";
+        else if (firstChar >= 'M' && firstChar <= 'R') persona = "Blueberry Matcha";
+        else persona = "Chai Latte";
+        return persona;
+    }
+
+    //handling waitlist entry form submit
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+
+        //waitlist entry data
+        const waitlistEntryData = new FormData(e.target);
+        const data = {
+            firstName: waitlistEntryData.get('firstName'),
+            lastName: waitlistEntryData.get('lastName'),
+            email: waitlistEntryData.get('email'),
+            luckyNumber: waitlistEntryData.get('luckyNumber'),
+            phoneNumber: waitlistEntryData.get('phoneNumber') || '' //bc it is optional
+        };
+
+        try {
+            const response = await fetch('/waitlist_entries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // Show success message with drink persona
+                const persona = assignDrinkPersona(data.firstName);
+                alert(`Thank you! You've been added to the waitlist. As part of our personas for a free drink, you are a ${persona}!!! Please keep a lookout for our messages!`);
+
+                // Reset form
+                e.target.reset();
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error || 'Failed to submit form'}`);
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            alert('An error occurred while submitting the form. Please try again.');
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
+    //logout
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('/logout');
+            if (response.ok || response.redirected) {
+                router.push('/');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            router.push('/');
+        }
+    };
+
     return (
         <div className="bg-white w-1/2 m-auto pt-10">
             {/* Header */}
@@ -11,7 +90,7 @@ export default function MainPage() {
                 </div>
                 <div className="flex gap-4 items-center">
                     <form action="/logout">
-                        <button>
+                        <button onClick={handleLogout}>
                             <span className="hover:underline">Logout</span>
                         </button>
                     </form>
@@ -39,7 +118,7 @@ export default function MainPage() {
             <hr />
 
             {/* Form */}
-            <form id="ourForm" className="flex flex-col mb-20">
+            <form id="ourForm" className="flex flex-col mb-20" onSubmit={handleSubmit}>
                 <br />
                 <label htmlFor="firstName" className="text-md mb-2 text-[#5E718E]">
                     First Name<span className="text-[#ef4444]"> *</span>
@@ -49,7 +128,7 @@ export default function MainPage() {
                     type="text"
                     id="firstName"
                     placeholder="ex. Jane"
-                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"                />
+                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
 
                 <label htmlFor="lastName" className="text-md mb-2 text-[#5E718E]">
@@ -60,7 +139,7 @@ export default function MainPage() {
                     type="text"
                     id="lastName"
                     placeholder="ex. Doe"
-                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"                />
+                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
 
                 <label htmlFor="email" className="text-md mb-2 text-[#5E718E]">
@@ -71,7 +150,7 @@ export default function MainPage() {
                     type="text"
                     id="email"
                     placeholder="ex. janedoe@gmail.com"
-                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"                />
+                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
 
                 <label htmlFor="phoneNumber" className="text-md mb-2 text-[#5E718E]">
@@ -81,7 +160,7 @@ export default function MainPage() {
                     type="text"
                     id="phoneNumber"
                     placeholder="ex. 123-456-7890"
-                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"                />
+                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
 
                 <label htmlFor="luckyNumber" className="text-md mb-2 text-[#5E718E]">
@@ -92,7 +171,7 @@ export default function MainPage() {
                     type="number"
                     id="luckyNumber"
                     placeholder="ex. 7"
-                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"                />
+                    className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
 
                 <button
