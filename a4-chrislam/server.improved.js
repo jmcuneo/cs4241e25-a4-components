@@ -107,13 +107,14 @@ nextApp.prepare().then(() => {
                 return res.status(200).json({success: true, message: "Login successful", redirect: "/main"
                 });
             } else { //failed password check
-                return res.status(200).json({success: true, message: "Login successful", redirect: "/main"
+                return res.status(401).json({success: false, message: "Wrong username or password"
                 });
             }
         }
             //The username is not found, this is redirect
         catch (err) {
-            return res.status(500).json({success: false, message: "Account not found. Created a new one for you!"
+            return res.status(500).json({success: false,
+                message: "Account not found. Created a new one for you!"
             });        }
     })
 

@@ -1,22 +1,13 @@
 Assignment 4 - Components
 ===
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page on Glitch/Heroku/etc., it displays correctly.
-4. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
----
 
 ## Northstar Cafe Waitlist Form
 
 your hosting link e.g. http://a4-charlieroberts.glitch.me
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+The Northstar Cafe Waitlist Form is a continuation of A3, except it has been implemented in React instead. Using React has been much easier for this assignment. For the dev process, it is a lot easier and readable to do. For example, any front-end (client) side work can stay in one file related to an HTML/JSX page. Anything server side stays in the server file.
+I did not have to do any major changes, as I usually just copied it from main.js, and needed to set up some useStates and useEffects. 
 
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+During this process, I did have trouble unrelated to this assignment needs. TailwindCSS updated to v4 during Week 3 of this course, meaning that the config. files were being removed and it became a one-liner to use it, however the frameworks have not caught up with it just yet, so I have to do a lot of customization again, as it would not let me use custom variables for color sadly.
+
+Fun assignment though! It will definitely help me within the final project scope.

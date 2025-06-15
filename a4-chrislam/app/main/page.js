@@ -47,7 +47,6 @@ export default function MainPage() {
             });
 
             if (response.ok) {
-                const result = await response.json();
                 // Show success message with drink persona
                 const persona = assignDrinkPersona(data.firstName);
                 alert(`Thank you! You've been added to the waitlist. As part of our personas for a free drink, you are a ${persona}!!! Please keep a lookout for our messages!`);
@@ -127,6 +126,7 @@ export default function MainPage() {
                     required
                     type="text"
                     id="firstName"
+                    name={"firstName"}
                     placeholder="ex. Jane"
                     className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
@@ -138,6 +138,7 @@ export default function MainPage() {
                     required
                     type="text"
                     id="lastName"
+                    name={"lastName"}
                     placeholder="ex. Doe"
                     className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
@@ -149,6 +150,7 @@ export default function MainPage() {
                     required
                     type="text"
                     id="email"
+                    name={"email"}
                     placeholder="ex. janedoe@gmail.com"
                     className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
@@ -159,6 +161,7 @@ export default function MainPage() {
                 <input
                     type="text"
                     id="phoneNumber"
+                    name={"phoneNumber"}
                     placeholder="ex. 123-456-7890"
                     className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
@@ -170,6 +173,7 @@ export default function MainPage() {
                     required
                     type="number"
                     id="luckyNumber"
+                    name={"luckyNumber"}
                     placeholder="ex. 7"
                     className="w-full p-4 border border-[#ECEBEB] rounded bg-[#FCFCFC] focus:outline-none focus:border-[#5E718E]"/>
                 <br />
