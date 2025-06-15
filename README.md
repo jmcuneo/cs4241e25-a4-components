@@ -1,13 +1,5 @@
 Assignment 4 - Components
 ===
-
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
-
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
-
-This project can be implemented on any hosting service (Glitch, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
 Deliverables
 ---
 
@@ -19,10 +11,9 @@ Do the following to complete this assignment:
 5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
 6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Northstar Cafe Waitlist Form
 
 your hosting link e.g. http://a4-charlieroberts.glitch.me
 
