@@ -2,60 +2,29 @@
 <html lang="en">
   <head>
     <title>Add Item - Spending Tracker</title>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/main.js" ></script>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<script src="js/main.js" ></script>-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <script type="module">
+      import RefreshRuntime from 'http://localhost:3001/@react-refresh'
+      RefreshRuntime.injectIntoGlobalHook(window)
+      window.$RefreshReg$ = () => {}
+      window.$RefreshSig$ = () => (type) => type
+      window.__vite_plugin_react_preamble_installed__ = true
+    </script>
     
     <!-- favicon -->
     <link rel="icon" type="image/x-icon" href="/piggy-bank.ico">
   </head>
-  <nav>
-    <a class="nava" href="/spending-list">Go to List</a>
-    <a class="nava" href="/logout">Logout</a>
-  </nav>
   <body>
-    <h1 class="col-lg-6 offset-lg-4">Add an Item</h1>
+    <div id="root"></div>
     <!-- change hard coding -->
-    <form method="POST" class="col-lg-6 offset-lg-4">
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="item">Name of item:</label>
-        <input type="text" id="item" value="" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="price">Price paid for item (only input numbers and a '.', no '$'):</label>
-        <input type="text" id="price" value="" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="discount">Any discount? (put in number from 1-100 terms of %)</label>
-        <input type="text" id="discount" value="0" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="category">Choose a category:</label>
-        <select id="category" name="categories">
-          <option value="general">General</option>
-          <option value="groceries">Groceries</option>
-          <option value="bills">Bills</option>
-          <option value="shopping">Shopping</option>
-          <option value="treats">Treats for Myself</option>
-          <option value="gifts">Gifts</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="note">Any notes:</label>
-        <input type="text" id="note" value="" class="form-control w-50">
-      </div>
-      <br>
-      <button id="sending" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Submit</button>
-    </form>
+    <script type="module" src="/src/main.jsx"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
   </body>
 </html>
