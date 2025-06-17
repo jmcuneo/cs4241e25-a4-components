@@ -1,0 +1,29 @@
+{
+  "name": "a4-chrislam",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "lint": "next lint",
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mime": "^4.0.7",
+    "mongodb": "^6.17.0",
+    "next": "15.3.3",
+    "node": "^24.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4"
+  }
+}
