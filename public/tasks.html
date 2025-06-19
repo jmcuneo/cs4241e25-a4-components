@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Task List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Magnolia is a task management application that allows users to safely and securely manage all of lifes tasks.">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <!-- Site-wide Header -->
+   <header>
+      <div id="header-logo" style="display: flex; align-items: center;">
+        <img id="logo" src="media/Magnolia.png" alt="Magnolia" style="height: 50px; width: auto; margin-right: 10px;">
+        <h1>Magnolia</h1>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <span id="greeting" style="margin-right: 20px;"></span>
+        <button id="logoutBtn" style="background-color: #ff5800; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Logout</button>
+      </div>
+    </header>
+    <hr>
+   
+    <!-- Task List Table, using Pure Table -->
+    <table class="pure-table pure-table-striped" id="taskList">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll"></th>
+          <th>Task Name</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Priority</th>
+          <th>Deadline</th>
+        </tr>
+      </thead>
+      <!-- Automatically load data, see main.js -->
+      <tbody id="taskTableBody"></tbody>
+    </table>
+
+    <!--Action Menu -->
+    <div id="actionMenu" style="display: none;">
+      <button id="markCompleteBtn" class="pure-button pure-button-primary">Mark Completed</button>
+      <button id="editBtn" class="pure-button">Edit</button>
+      <button id="deleteBtn" class="button-error pure-button">Delete</button>
+    </div>
+    <!-- Delete Task Modal -->
+    <div id="deleteModal" class="modal">
+      <div id="contents">
+        <p>Are you sure you want to delete the selected task(s)?</p>
+        <button id="confirmDeleteBtn" class="button-error pure-button">Yes, Delete</button>
+        <button id="cancelDeleteBtn" class="pure-button">Cancel</button>
+      </div>
+    </div>
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal" style="display:none;">
+      <div id="contents">
+        <form id="editTaskForm">
+          <label>Task Name: <input type="text" id="editTaskName"></label><br>
+          <label>Description: <input type="text" id="editTaskDescription"></label><br>
+          <label>Due Date: <input type="datetime-local" id="editTaskDueDate"></label><br>
+          <label>Priority:
+            <select id="editTaskPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label><br>
+          <div class="buttons">
+            <button type="submit" class="pure-button pure-button-primary">Save</button>
+            <button type="button" id="cancelEditBtn" class="pure-button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer, allows you to return to adding new tasks -->
+    <footer>
+      <button id="addTask">Add New Tasks</button>
+      <hr>
+      <p>
+        Magnolia Task Manager
+      </p>
+      <p>
+        <small>CS4241 Assignment 3</small>
+      </p>
+    </footer>
+  </body>
+
+  <script>
+    // On loading the page, run the following script
+    document.addEventListener('DOMContentLoaded', () => {
+      const greeting = document.getElementById('greeting');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      // Get the username from the cookie
+      const displayName = getCookie('displayName');
+      if (displayName) {
+        greeting.textContent = `Welcome, ${displayName}, to Magnolia! Magnolia is the premiere web application for managing your tasks. What are you waiting for? Start today!`;
+      } else {
+        greeting.textContent = 'Welcome!';
+      }
+    });
+
+    // Logout Button
+    logoutBtn.addEventListener('click', () => {
+      window.location.replace('/logout');
+    });
+
+    // On clicking the "Add New Tasks" button, return to /home, where a new task can be added.
+    addTask.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.href = '/home';
+    });
+  </script>
+</html>
