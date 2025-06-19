@@ -211,14 +211,18 @@ app.get("/getItem", authenticate, async (req, res) => {
     res.json(itemToEdit);
 })
 
-app.post("/update", authenticate, async (req, res) => {
-    let updatingItem = req.body;
-    updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
-    const result = await itemCollection.updateOne( 
-        { _id: new ObjectId( req.session.editItemID ) },
-        { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
-    );
-    res.redirect('spending-list');
+app.post("/edit", authenticate, async (req, res) => {
+    if (req.body != undefined) {
+        console.log("POSTEDIT")
+        console.log(req.body)
+        let updatingItem = req.body;
+        updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
+        const result = await itemCollection.updateOne( 
+            { _id: new ObjectId( req.session.editItemID ) },
+            { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
+        );
+        res.redirect('spending-list');
+    }
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.

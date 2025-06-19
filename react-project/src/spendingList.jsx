@@ -9,8 +9,8 @@ const Items = item => (
         <th>${item.moneySaved}</th>
         <th>{item.category}</th>
         <th>{item.note}</th>
-        <th><button id="editing" data-mdb-button-init data-mdb-ripple-init className="btn btn-secondary" value={item._id} onClick={ e => item.editPage(item._id)}>Edit Item</button></th>
-        <th><button id="deleting" data-mdb-button-init data-mdb-ripple-init className="btn btn-danger" value={item._id} onClick={ e => item.deleteItem(item._id)}>Delete Item</button></th>
+        <th><button id="editing" data-mdb-button-init data-mdb-ripple-init className="btn btn-secondary" value={item._id} onClick={ e => item.editFunc(item.id)}>Edit Item</button></th>
+        <th><button id="deleting" data-mdb-button-init data-mdb-ripple-init className="btn btn-danger" value={item._id} onClick={ e => item.deleteFunc(item.id)}>Delete Item</button></th>
     </tr>
 )
 
@@ -57,16 +57,16 @@ const SpendingList = () => {
     }
 
 
-
-
-    // fetch, calling data
-    fetch( '/obtainData.json', {
-        method:'GET'
-    })
-    .then( response => response.json())
-    .then( json => {
-        setAllItems(json);
-    })
+    if (allItems.length === 0) {
+        // fetch, calling data
+        fetch( '/obtainData.json', {
+            method:'GET'
+        })
+        .then( response => response.json())
+        .then( json => {
+            setAllItems(json);
+        })
+    }
 
   // make sure to only do this once
   /* if( todos.length === 0 ) {
@@ -105,7 +105,7 @@ const SpendingList = () => {
                 </tr>
             </thead>
             <tbody id="itemtablebody">
-                {allItems.map((item, i) => <Items key={i} date={item.date} item={item.item} price={item.price} discount={item.discount} moneySaved={item.moneySaved} category={item.category} note={item.note} editFunc={editPage} deleteFunc={deleteItem} />)}
+                {allItems.map((item, i) => <Items key={i} id={item._id} date={item.date} item={item.item} price={item.price} discount={item.discount} moneySaved={item.moneySaved} category={item.category} note={item.note} editFunc={editPage} deleteFunc={deleteItem} />)}
             </tbody>
         </table>
     </div>

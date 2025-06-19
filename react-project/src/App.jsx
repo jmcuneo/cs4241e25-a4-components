@@ -8,7 +8,11 @@ import React, { useState, useEffect } from 'react'
 
 
 const App = () => {
-  const [todos, setTodos] = useState([ ]) 
+  const [items, setItems] = useState([]);
+  const [ivalue, setIValue] = useState("");
+  const [pvalue, setPValue] = useState("");
+  const [dvalue, setDValue] = useState("");
+  const [nvalue, setNValue] = useState("");
   /* function toggle( name, completed ) {
     fetch( '/change', {
       method:'POST',
@@ -38,7 +42,8 @@ const App = () => {
           }
     } )
     .then( json => {
-       setTodos( json )
+       setItems( json );
+       window.location.reload();
     })
   }
   
@@ -64,25 +69,25 @@ const App = () => {
 
         <h1 className="col-lg-6 offset-lg-4">Add an Item</h1>
         <div data-mdb-input-init className="form-outline mb-4">
-            <label for="item">Name of item:</label>
-            <input type="text" id="item" value="" className="form-control w-50" />
+            <label htmlFor="item">Name of item:</label>
+            <input type="text" id="item" value={ivalue} className="form-control w-50" onChange={(e) => setIValue(e.target.ivalue)} />
         </div>
         <br />
 
         <div data-mdb-input-init className="form-outline mb-4">
-            <label for="price">Price paid for item (only input numbers and a '.', no '$'):</label>
-            <input type="text" id="price" className="form-control w-50" />
+            <label htmlFor="price">Price paid for item (only input numbers and a '.', no '$'):</label>
+            <input type="text" id="price" value={pvalue} className="form-control w-50" onChange={(e) => setPValue(e.target.pvalue)} />
         </div>
         <br />
 
         <div data-mdb-input-init className="form-outline mb-4">
-            <label for="discount">Any discount? (put in number from 1-100 terms of %)</label>
-            <input type="text" id="discount" value="0" className="form-control w-50" />
+            <label htmlFor="discount">Any discount? (put in number from 1-100 terms of %)</label>
+            <input type="text" id="discount" value={dvalue} className="form-control w-50" onChange={(e) => setDValue(e.target.dvalue)} />
         </div>
         <br />
 
         <div data-mdb-input-init className="form-outline mb-4">
-            <label for="category">Choose a category:</label>
+            <label htmlFor="category">Choose a category:</label>
             <select id="category" name="categories">
             <option value="general">General</option>
             <option value="groceries">Groceries</option>
@@ -96,8 +101,8 @@ const App = () => {
         <br />
 
         <div data-mdb-input-init className="form-outline mb-4">
-            <label for="note">Any notes:</label>
-            <input type="text" id="note" className="form-control w-50" />
+            <label htmlFor="note">Any notes:</label>
+            <input type="text" id="note" value={nvalue} className="form-control w-50" onChange={(e) => setNValue(e.target.nvalue)} />
         </div>
         <br />
         <button id="sending" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4" onClick={ e => add()}>Submit</button>

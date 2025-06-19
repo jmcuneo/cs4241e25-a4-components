@@ -22,48 +22,6 @@
     <link rel="icon" type="image/x-icon" href="/piggy-bank.ico">
   </head>
   <body>
-    <script>
-      window.onload = getItem;
-    </script>
-    <h1 class="col-lg-6 offset-lg-4">Edit Item</h1>
-    <form method="POST" class="col-lg-6 offset-lg-4">
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="eitem">Name of item:</label>
-        <input type="text" id="eitem" value="" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="eprice">Price paid for item (only input numbers and a '.', no '$'):</label>
-        <input type="text" id="eprice" value="" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="ediscount">Any discount? (put in number from 1-100 terms of %)</label>
-        <input type="text" id="ediscount" value="0" class="form-control w-50">
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="ecategory">Choose a category:</label>
-        <select id="ecategory" name="categories">
-            <option hidden disabled selected value> -- select an option -- </option>
-            <option value="general">General</option>
-            <option value="groceries">Groceries</option>
-            <option value="bills">Bills</option>
-            <option value="shopping">Shopping</option>
-            <option value="treats">Treats for Myself</option>
-            <option value="gifts">Gifts</option>
-            <option value="other">Other</option>
-        </select>
-      </div>
-      <br>
-      <div data-mdb-input-init class="form-outline mb-4">
-        <label for="enote">Any notes:</label>
-        <input type="text" id="enote" value="" class="form-control w-50">
-      </div>
-      <br>
-      <button id="update" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Update</button>
-    </form>
-
     <div id="root"></div>
     <!-- change hard coding -->
     <script type="module" src="/src/forEdit.jsx"></script>
