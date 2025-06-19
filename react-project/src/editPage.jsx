@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react'
 ) */
 
 
-const App = () => {
+const EditPage = () => {
   const [todos, setTodos] = useState([ ]) 
   /* function toggle( name, completed ) {
     fetch( '/change', {
@@ -58,8 +58,9 @@ const App = () => {
   return (
     <div className="App">
         <nav>
-          <a className="nava" href="/spending-list">Go to List</a>
-          <a className="nava" href="/logout">Logout</a>
+            <a className="nava" href="/index">Add Item to List</a>
+            <a className="nava" href="/spending-list">Go to List</a>
+            <a className="nava" href="/logout">Logout</a>
         </nav>
 
         <h1 className="col-lg-6 offset-lg-4">Add an Item</h1>
@@ -105,4 +106,4 @@ const App = () => {
   )
 }
 
-export default App
+export default EditPage
