@@ -27,3 +27,4 @@ node_modules/
 .env
 server.improved.js
 index.jsx
+temp.jsx

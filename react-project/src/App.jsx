@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import EditPage from './editPage.jsx'
+import SpendingList from './spendingList.jsx'
 
 /* const Todo = props => (
   <li>{props.name} : 
@@ -61,6 +64,13 @@ const App = () => {
   }) */
 
   return (
+    <>
+    <Router>
+      <Routes>
+        <Route path="/spending-list" element={<SpendingList />} />
+        {/* Add more routes for other pages */}
+      </Routes>
+    </Router>
     <div className="App">
         <nav>
           <a className="nava" href="/spending-list">Go to List</a>
@@ -107,6 +117,7 @@ const App = () => {
         <br />
         <button id="sending" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4" onClick={ e => add()}>Submit</button>
     </div>
+    </>
   )
 }
 

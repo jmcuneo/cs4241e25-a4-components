@@ -25,7 +25,7 @@ app.set( "views", "./views" )
 app.use( express.static(path.join(__dirname, 'dist'))  )
 //app.use( express.static( 'src') )
 //app.use( express.static( 'public') )
-//app.use( express.static( 'views') )
+app.use( express.static( 'views') )
 //app.use( express.static( 'views'  ) )
 app.use( express.json() )
 
@@ -98,7 +98,7 @@ app.use( (req,res,next) => {
 passport.use(new GitHubStrategy({
     clientID: `${process.env.GITHUB_CLIENT_ID}`,
     clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-    callbackURL: "http://localhost:3001/auth/github/callback"
+    callbackURL: "https://a4-estherkim.onrender.com/auth/github/callback"
 },
 function(accessToken, refreshToken, profile, cb) {
     cb(null, profile);
@@ -191,8 +191,8 @@ app.get( "/index", authenticate, (req, res) => {
     res.render('index', {layout:false});
 })
 
-app.get( "/", authenticate, (req, res) => {
-    res.render('index', {layout:false});
+app.get( '/', authenticate, (req, res) => {
+    res.render('/views/index', {layout:false});
 })
 
 app.get( "/spending-list", authenticate, (req,res) => {
