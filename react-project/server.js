@@ -23,9 +23,9 @@ app.set( "views", "./views" )
 
 
 app.use( express.static(path.join(__dirname, 'dist'))  )
-app.use( express.static( 'src') )
-app.use( express.static( 'public') )
-app.use( express.static( 'views') )
+//app.use( express.static( 'src') )
+//app.use( express.static( 'public') )
+//app.use( express.static( 'views') )
 //app.use( express.static( 'views'  ) )
 app.use( express.json() )
 

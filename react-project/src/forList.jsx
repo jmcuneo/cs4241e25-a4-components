@@ -1,9 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import EditPage from './editPage.jsx'
+import './index.css'
+import SpendingList from './spendingList.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <EditPage />
+    <SpendingList />
   </StrictMode>,
 )
