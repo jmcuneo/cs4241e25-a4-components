@@ -1,122 +1,131 @@
 <script>
     import { onMount } from 'svelte';
     import { getUserDisplayName } from '../utils/auth.js';
-    import swal from 'sweetalert';
+    import * as greetings from '../utils/greetings.js';
+    import Settings from './Settings.svelte';
+    import { currentTheme } from '../utils/appearance.js';
 
-    export let greeting = 'Welcome!';
-    export let showLogout = true;
+    export let greeting = '';
     export let showRegister = false;
     export let showLogin = false;
     export let showSettings = true;
     export let navigateTo;
 
     let displayName = '';
-    let settingsVisible = false;
-    let baseGreeting = '';
+    let currentGreeting = '';
+    let settingsComponent;
 
-    function genGreeting(displayName, greeting) {
-        if (displayName && greeting.includes('{displayName}')) {
-            return greeting.replace('{displayName}', displayName);
-        } else if (displayName) {
-            // If we have a display name but no placeholder, prepend it
-            return `Welcome, ${displayName}, to Magnolia. ${greeting.replace(/^Welcome[^!]*!?\s*/, '')}`;
-        } else {
-            return greeting;
-        }
-    }
+    $: logoPath = ($currentTheme === 'dark' || $currentTheme === 'inverted')
+      ? 'src/assets/Magnolia-white.png'
+      : 'src/assets/Magnolia.png'
 
     onMount(() => {
         displayName = getUserDisplayName();
-    });
+        updateGreeting();
+    })
 
-    $: baseGreeting = genGreeting(displayName, greeting);
-
-    function toggleSettings(e) {
-        e.stopPropagation();
-        settingsVisible = !settingsVisible;
-    }
-
-    function closeSettings() {
-        settingsVisible = false;
-    }
-
-    async function changeDisplayName() {
-        const currentName = getUserDisplayName() || '';
-        const newName = prompt('Enter your new display name:', currentName);
-    
-        if (newName && newName.trim() && newName !== currentName) {
-            try {
-                const res = await fetch('/updateDisplayName', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayName: newName.trim() })
-                });
-                const result = await res.json();
-        
-                if (result.status === 'success') {
-                    document.cookie = `displayName=${encodeURIComponent(newName.trim())}; path=/`;
-                    swal('Success', 'Display name updated successfully!', 'success')
-                        .then(() => location.reload());
-                } else {
-                    swal('Error', 'Failed to update display name. Please try again.', 'error');
-                }
-            } catch (error) {
-                swal('Error', 'Failed to update display name. Please try again.', 'error');
-            }
+    function updateGreeting() {
+        if (greeting) {
+            currentGreeting = greetings.getPersonalizedGreeting(greeting, displayName);
+        } else {
+            currentGreeting = greetings.getTimeBasedGreeting(displayName)
         }
     }
 
-    function logout() {
-        window.location.href = '/logout';
+    function handleSettingsToggle(e) {
+      if (settingsComponent) {
+        settingsComponent.toggleSettings(e);
+      }
+    }
+
+    function handleSettingsClose() {
+        if (settingsComponent) {
+            settingsComponent.closeSettings();
+        }
+    }
+
+    $: if (displayName !== undefined || greeting) {
+        updateGreeting();
     }
 </script>
 
-<svelte:window on:click={closeSettings} />
-
-<!-- Settings Menu -->
-{#if showSettings}
-<div id="settings">
-  <button id="btn" on:click={toggleSettings}>
-    <span role="img" aria-label="Settings" style="font-size: 24px;">&#9881;</span>
-  </button>
-  {#if settingsVisible}
-    <div 
-      id="settingsMenu" 
-      style="display: block;" 
-      role="menu"
-      tabindex="-1"
-      on:click|stopPropagation
-      on:keydown|stopPropagation
-    >
-      <button id="displayName" class="pure-button" on:click={changeDisplayName}>
-        Change Display Name
-      </button>
-    </div>
-  {/if}
-</div>
-{/if}
+<svelte:window on:click={handleSettingsClose} />
 
 <!-- Header of the page -->
-<header>
+<header class="app-header">
   <div id="header-logo" style="display: flex; align-items: center;">
-    <img id="logo" src="src/assets/Magnolia.png" alt="Magnolia" style="height: 50px; width: auto; margin-right: 10px;">
+    <img id="logo" src={logoPath} alt="Magnolia" style="height: 50px; width: auto; margin-right: 10px;">
     <h1>Magnolia</h1>
   </div>
-  <div style="display: flex; align-items: center;">
-    <span id="greeting" style="margin-right: 20px;">
-      {baseGreeting}
+  <div class="header-content" style="display: flex; align-items: center;">
+    <span class="greeting">
+      {currentGreeting}
       {#if showRegister}
-        Please log in or <a href="/register" on:click|preventDefault={() => navigateTo && navigateTo('register')}>register</a> to continue
+        or <a href="/register" on:click|preventDefault={() => navigateTo && navigateTo('register')}>register</a> here
     {/if}
     {#if showLogin}
         If you already have an account, please <a href="/login" on:click|preventDefault={() => navigateTo && navigateTo('login')}>login</a> to continue.
     {/if}
     </span>
-    {#if showLogout}
-        <button id="logoutBtn" style="background-color: #ff5800; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;" on:click={logout}>
-            Logout
-        </button>
+
+    {#if showSettings}
+      <Settings bind:this={settingsComponent}/>
     {/if}
   </div>
 </header>
-<hr>
+<hr class="header-divider">
+
+<style>
+  .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--base);
+        color: var(--option);
+        padding: 1rem 0;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-logo h1 {
+        color: var(--option);
+        margin: 0;
+        margin-left: 10px;
+    }
+
+    #logo {
+        height: 50px;
+        width: auto;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .greeting {
+        color: var(--option);
+        margin-right: 20px;
+    }
+
+    .greeting a {
+        color: var(--links);
+        text-decoration: none;
+    }
+
+    .greeting a:hover {
+        color: var(--highlight);
+        text-decoration: underline;
+    }
+
+    .header-divider {
+        border: none;
+        height: 1px;
+        background-color: var(--option);
+        margin: 0;
+        opacity: 0.3;
+    }
+</style>

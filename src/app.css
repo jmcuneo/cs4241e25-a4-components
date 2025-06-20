@@ -6,6 +6,27 @@
   --links: #114D9C;
 }
 
+.dark-theme {
+  --base: #1a1a1a;
+  --option: #fff;
+  --highlight: #ff6b35;
+  --links: #4a9eff;
+}
+
+.inverted-theme {
+  --base: #000;
+  --option: #f5eed0;
+  --highlight: #00a8ff;
+  --links: #eb4d2c;
+}
+
+.high-contrast-theme {
+  --base: #fff;
+  --option: #000;
+  --highlight: #ff0000;
+  --links: #000ff;
+}
+
 /* Site-wide properties */
 html {
   background-color: var(--base);
@@ -86,8 +107,8 @@ a:not(:hover) {
 
 #settings button:hover {
   color: var(--highlight) !important;
-  background-color: rgba(0, 0, 0, 0.1) !important;
-  border-radius: 4px !important;
+  background-color: rgba(0, 0, 0, 0.025) !important;
+  border-radius: 1px !important;
 }
 
 #settingsMenu {
@@ -223,7 +244,7 @@ select.field option {
 #addTask {
   background-color: var(--option);
   color: var(--base);
-  font-size: 1.25rem;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-weight: bold;
@@ -273,6 +294,7 @@ select.field option {
   box-sizing: border-box;
   border-collapse: separate;
   border-spacing: 0;
+  color: var(--option);
 }
 
 /* Fix table header and cell alignment */
@@ -282,6 +304,9 @@ select.field option {
   padding: 12px 8px;
   vertical-align: middle;
   border-bottom: 2px solid var(--option);
+  border-top: 2px solid var(--option);
+  color: var(--option);
+  background-color: var(--base);
   line-height: 1.2;
 }
 
@@ -289,8 +314,10 @@ select.field option {
   font-size: 1rem;
   padding: 12px 8px;
   vertical-align: middle;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--option);
   line-height: 1.2;
+  background-color: var(--base);
+  opacity: 0.75;
 }
 
 /* Fix first column (checkbox column) specifically */

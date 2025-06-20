@@ -1,6 +1,7 @@
 <script>
   export let navigateTo;
   import Header from './Header.svelte';
+  import Footer from './Footer.svelte';
   import OTP from './OTP.svelte';
   import swal from 'sweetalert';
 
@@ -60,7 +61,13 @@
   }
 </script>
 
-<Header greeting="Welcome to Magnolia." showLogout={false} showLogin={true} showRegister={false} showSettings={false} {navigateTo} />
+<Header 
+  greeting="Welcome to Magnolia." 
+  showLogin={true} 
+  showRegister={false} 
+  showSettings={false} 
+  {navigateTo} 
+/>
 
 <!-- Register Card -->
 <article class="card">
@@ -99,4 +106,10 @@
   {currentEmail}
   {navigateTo}
   on:close={closeModal}
+/>
+
+<Footer 
+  navigateTo={navigateTo} 
+  onHome={false}
+  onTasks={false}
 />
