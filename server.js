@@ -8,6 +8,13 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express()
 
 app.engine( "handlebars", hbs() );
@@ -15,8 +22,11 @@ app.set( "view engine", "handlebars" )
 app.set( "views", "./views" )
 
 
-app.use( express.static( 'public' ) )
-app.use( express.static( 'views'  ) )
+app.use( express.static(path.join(__dirname, 'dist'))  )
+app.use( express.static( 'src') )
+app.use( express.static( 'public') )
+app.use( express.static( 'views') )
+//app.use( express.static( 'views'  ) )
 app.use( express.json() )
 
 app.use(session({
