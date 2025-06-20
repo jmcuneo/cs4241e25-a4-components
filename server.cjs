@@ -12,7 +12,6 @@ const cookieParser = require('cookie-parser')
 const { MongoClient } = require('mongodb');
 const { ObjectId } = require('mongodb');
 
-
 // Create the Express app
 const app = express();
 const port = process.env.PORT || 3000;
@@ -69,15 +68,11 @@ app.post('/updateDisplayName', async (req, res) => {
 })
 
 /* Handle the website display and routing */
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
 /* -- Static Files --  */
-app.use('/css', express.static(path.join(__dirname, 'public', '/css')));
-app.use('/media', (req, res, next) => {
-    if (req.url.endsWith('.png')) {
-        res.set('Content-Type', 'image/png');
-    }
-    next();
-}, express.static(path.join(__dirname, 'public', '/media')));
-app.use('/js', express.static(path.join(__dirname, 'public', '/js')));
+app.use('/media', express.static(path.join(__dirname, 'public', 'media')));
 
 /* -- Robots.txt for Lighthouse -- */
 app.get('/robots.txt', (req, res) => {
@@ -88,8 +83,8 @@ app.get('/robots.txt', (req, res) => {
 /* -- Prevent user from accessing protected pages if not logged in -- */
 app.use((req, res, next) => {
     // Anything that can be publicly accessed, such as registration/login pages and the associated endpoints, as well as static files
-    const publicEndpoints = ['/login', '/register', '/sendOTP', '/verifyOTP', '/registerUser', '/robots.txt' ];
-    const staticElements = req.path.startsWith('/css') || req.path.startsWith('/media') || req.path.startsWith('/js');
+    const publicEndpoints = ['/login', '/register', '/sendOTP', '/verifyOTP', '/registerUser', '/robots.txt', '/entries', '/submit', '/deleteTask', '/editTask', '/complete', '/updateDisplayName'];
+    const staticElements = req.path.startsWith('/css') || req.path.startsWith('/assets') || req.path === '/vite.svg';
     // If the request is for one of these, pass the user through.
     if (publicEndpoints.includes(req.path) || staticElements ) {
         return next();
@@ -105,11 +100,11 @@ app.use((req, res, next) => {
 
 // This was originally one big option, but it broke the code above this that prevented non-logged in users from accessing protected pages.
 app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.get('/tasks', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'tasks.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 /* -- Prevent logged in users from accessing login and register pages -- */
@@ -121,11 +116,11 @@ app.use(['/login', '/register'], (req, res, next) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 /* -- Update the root directory based on if the user is logged in or not. -- */
@@ -231,11 +226,11 @@ app.post('/verifyOTP', async (req, res) => {
     }
     // Otherwise, give the user the cookies required for accessing the website.
     //-- Auth cookie is a boolean for if the user is logged in or not.
-    res.cookie('auth', 'true', { httpOnly: true, secure: true, maxAge: 60 * 60 * 1000 });
+    res.cookie('auth', 'true', { httpOnly: true, secure: false, maxAge: 60 * 60 * 1000 });
     //-- Display name cookie is the user's display name, which is used to greet the user.
-    res.cookie('displayName', user.displayName, { httpOnly: false, secure: true, maxAge: 60 * 60 * 1000 });
+    res.cookie('displayName', user.displayName, { httpOnly: false, secure: false, maxAge: 60 * 60 * 1000 });
     //-- Email cookie is the user's email, which is used to idenftify the user in the database.
-    res.cookie('email', user.email, { httpOnly: true, secure: true, maxAge: 60 * 60 * 1000 });
+    res.cookie('email', user.email, { httpOnly: true, secure: false, maxAge: 60 * 60 * 1000 });
     // Return a success message.
     res.status(200).json({ status: 'success', message: 'OTP verified successfully.' });
 });
@@ -405,6 +400,10 @@ app.post('/complete', async (req, res) => {
     // If the task was updated successfully, return a 200 success response.
     res.status(200).json({ status: 'success', message: 'Task updated successfully.' });
 })
+
+app.get('*', (req, res) => {
+    res.status(404).send('Page not found');
+});
 
 // Start the server and inform the console of the port it is running on.
 app.listen(port, () => {

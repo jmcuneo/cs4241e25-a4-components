@@ -1,0 +1,433 @@
+/* The hex codes of the colour pallette */
+:root {
+  --base: #f5eed0;
+  --option: #000;
+  --highlight: #ff5800;
+  --links: #114D9C;
+}
+
+/* Site-wide properties */
+html {
+  background-color: var(--base);
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 15px;
+  color: var(--option);
+}
+
+/* Site content */
+body {
+  background-color: var(--base);
+  width: 75%;
+  margin: auto;
+  padding: 15px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--links);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+  animation: linkHover 1s forwards;
+}
+
+a:not(:hover) {
+  animation: linkHoverOut 1s forwards;
+}
+
+@keyframes linkHover {
+  0% {
+    color: var(--links);
+  }
+
+  100% {
+    color: var(--highlight);
+  }
+}
+
+@keyframes linkHoverOut {
+  0% {
+    color: var(--highlight);
+  }
+
+  100% {
+    color: var(--links);
+  }
+}
+
+/* Header Content */
+.header-logo {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  justify-content: space-between;
+}
+
+#settings {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 2001;
+}
+
+#settings button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem !important;  /* Reduced from 2rem */
+  color: var(--option) !important;  /* Make gear visible */
+  padding: 8px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+#settings button:hover {
+  color: var(--highlight) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+#settingsMenu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background-color: var(--base);
+  border: 1px solid var(--option);
+  border-radius: 0.25rem;
+  padding: 0.5rem !important;  /* Reduced padding */
+  min-width: 150px !important;  /* Set specific width */
+  max-width: 200px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#settingsMenu button {
+  width: 100% !important;
+  padding: 8px 12px !important;
+  font-size: 0.9rem !important;  /* Smaller font */
+  text-align: left !important;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--option) !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
+#settingsMenu button:hover {
+  background-color: var(--highlight) !important;
+  color: var(--base) !important;
+}
+
+/* Login/Register */
+.card {
+  margin-top: 5%;
+  margin-left: 10%;
+  width: 75%;
+  background-color: #f5eed0;
+}
+
+.card header {
+  margin-left: 0;
+}
+
+.card button {
+  width: 6%;
+  background-color: #ff5800;
+  color: #000;
+  width: fit-content;
+}
+
+/* Task Submission */
+#taskForm {
+  display: block;
+}
+
+.req {
+  color: var(--highlight);
+}
+
+label {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--option);
+  display: block;
+  line-height: 1.4;
+}
+
+.field {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--option);
+  border-radius: 0.25rem;
+  background-color: var(--base);
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  vertical-align: top;
+}
+
+/* Fix datetime-local input specifically */
+input[type="datetime-local"].field {
+  padding: 0.8rem 1rem !important;
+  line-height: 1.2 !important;
+  height: auto !important;
+  vertical-align: middle !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Also fix other input types that might have similar issues */
+input[type="date"].field,
+input[type="time"].field {
+  padding: 0.8rem 1rem !important;
+  line-height: 1.2 !important;
+  height: auto !important;
+  vertical-align: middle !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Override any webkit/browser specific styles for date inputs */
+input[type="datetime-local"]::-webkit-datetime-edit {
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+input[type="datetime-local"]::-webkit-datetime-edit-text {
+  padding: 0 2px !important;
+  line-height: 1.2 !important;
+}
+
+/* Fix select dropdown text positioning */
+select.field {
+  height: auto;
+  padding: 1rem;
+  line-height: 1.4;
+}
+
+select.field option {
+  padding: 0.5rem;
+  line-height: 1.4;
+}
+
+#addTask {
+  background-color: var(--option);
+  color: var(--base);
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: bold;
+  margin-top: 2rem;
+  outline: none;
+}
+
+#addTask:hover {
+  animation: highlightGradientIn 1s forwards;
+}
+
+#addTask:not(:hover) {
+  animation: highlightGradientOut 1s forwards;
+}
+
+@keyframes highlightGradientIn {
+  from {
+    background-color: var(--option);
+    transform: scale(1.00);
+  }
+
+  to {
+    background-color: var(--highlight);
+    transform: scale(1.10);
+  }
+}
+
+@keyframes highlightGradientOut {
+  from {
+    background-color: var(--highlight);
+    transform: scale(1.10);
+  }
+
+  to {
+    background-color: var(--option);
+    transform: scale(1.00);
+  }
+}
+
+/* Task List - Fixed table alignment */
+#taskList {
+  background-color: var(--base);
+  border: var(--option) 1px solid;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Fix table header and cell alignment */
+#taskList th {
+  text-align: left;
+  font-size: 1rem;
+  padding: 12px 8px;
+  vertical-align: middle;
+  border-bottom: 2px solid var(--option);
+  line-height: 1.2;
+}
+
+#taskList td {
+  font-size: 1rem;
+  padding: 12px 8px;
+  vertical-align: middle;
+  border-bottom: 1px solid #ccc;
+  line-height: 1.2;
+}
+
+/* Fix first column (checkbox column) specifically */
+#taskList th:first-child,
+#taskList td:first-child {
+  width: 40px;
+  text-align: center;
+  padding: 8px;
+}
+
+.urgent {
+  color: var(--highlight);
+  font-weight: bold;
+}
+
+/* Ensure checkboxes are visible and properly aligned */
+input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  vertical-align: middle !important;
+  position: relative !important;
+  top: 0 !important;
+}
+
+/* Override any framework styles that might be interfering */
+table input[type="checkbox"] {
+  transform: none !important;
+  -webkit-appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  appearance: checkbox !important;
+}
+
+#actionMenu {
+  position: fixed; 
+  bottom: 20px;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index:1000;
+  display: flex;
+  gap: 10px;
+}
+
+#editModal {
+  position:fixed; 
+  top:0; 
+  left:0; 
+  width:100vw; 
+  height:100vh; 
+  background:rgba(0,0,0,0.5); 
+  align-items:center; 
+  justify-content:center; 
+  z-index:2000
+}
+
+#editModal .buttons {
+  margin-top: 5%;
+}
+
+#editModal #contents {
+  background: var(--base);
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+/* Fix edit modal form elements */
+#editModal label {
+  display: block;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+#editModal input,
+#editModal select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  line-height: 1.4;
+  vertical-align: top;
+}
+
+#deleteModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#deleteModal #contents {
+  background: var(--base);
+  padding: 24px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+#confirmDeleteBtn {
+  background: var(--highlight);
+  color: var(--option);
+}
+
+.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+/* Override any conflicting framework styles */
+.pure-table th,
+.pure-table td {
+  padding: 12px 8px !important;
+  vertical-align: middle !important;
+  line-height: 1.2 !important;
+}
+
+.pure-table th:first-child,
+.pure-table td:first-child {
+  text-align: center !important;
+  width: 40px !important;
+}
+
+/* Fix Picnic modal interference */
+article.card input,
+article.card select {
+  line-height: 1.4 !important;
+  padding: 1rem !important;
+  height: auto !important;
+}
