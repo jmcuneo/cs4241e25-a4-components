@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EditPage from './editPage.jsx'
 import SpendingList from './spendingList.jsx'
-import App from './App.jsx'
 
 /* const Todo = props => (
   <li>{props.name} : 
@@ -69,7 +68,6 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/spending-list" element={<SpendingList />} />
-        <Route path="/" element={<App />} />
         {/* Add more routes for other pages */}
       </Routes>
     </Router>
