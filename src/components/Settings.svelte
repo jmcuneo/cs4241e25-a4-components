@@ -2,7 +2,7 @@
     import { getUserDisplayName } from "../utils/auth";
     import swal from 'sweetalert';
     import { fade, fly } from 'svelte/transition';
-    import { themes, currentTheme, setTheme, toggleDarkMode } from '../utils/appearance.js';
+    import { themes, currentTheme, setTheme } from '../utils/appearance.js';
 
     export let showSettings = true;
     export let settingsVisible = false;
@@ -82,21 +82,19 @@
                     Change Display Name
                 </button>
 
+                <hr>
                 <div class="theme-selector">
                     <div class="theme-label">Theme:</div>
                     {#each Object.entries(themes) as [key, theme]}
                         <button
-                            class="theme-option pure-button"
+                            class="theme-option"
                             class:active={$currentTheme === key}
                             on:click={() => changeTheme(key)}
                         > {theme.name} </button>
                     {/each}
                 </div>
 
-                <button class="pure-button" on:click={toggleDarkMode}>
-                    Toggle Dark Mode
-                </button>
-
+                <hr>
                 <button id="logout" class="pure-button" on:click={logout}>
                     Logout
                 </button>

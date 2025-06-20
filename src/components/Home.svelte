@@ -59,4 +59,8 @@
     font-size: 1.4em;
     margin-left: 0.2em;
   }
+
+  option {
+    background-color: var(--base);
+  }
 </style>

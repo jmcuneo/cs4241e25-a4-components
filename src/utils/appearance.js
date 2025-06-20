@@ -1,8 +1,18 @@
 import { writable } from 'svelte/store';
 
 export const themes = {
-    light: {
-        name: 'Light',
+    radiance: {
+        name: 'Radiance',
+        class: 'high-contrast-theme',
+        colors: {
+            base: '#fff',
+            option: '#000',
+            highlight: '#ff0000',
+            links: '#0000ff',
+        }
+    },
+    cream: {
+        name: 'Cream',
         class: '',
         colors: {
             base: '#f5eed0',
@@ -11,8 +21,18 @@ export const themes = {
             links: '#114D9C',
         }
     },
-    dark: {
-        name: 'Dark',
+    sunset: {
+        name: 'Sunset',
+        class: 'sunset-theme',
+        colors: {
+            base: '#512889',
+            option: '#fff',
+            highlight: '#ED872D',
+            links: '#C66F44'
+        }
+    },
+    charcoal: {
+        name: 'Charcoal',
         class: 'dark-theme',
         colors: {
             base: '#1a1a1a',
@@ -21,8 +41,8 @@ export const themes = {
             links: '#4a9eff',
         }
     },
-    inverted: {
-        name: 'Inverted',
+    midnight: {
+        name: 'Midnight',
         class: 'inverted-theme',
         colors: {
             base: '#000',
@@ -30,58 +50,74 @@ export const themes = {
             highlight: '#00a8ff',
             links: '#eb4d2c',
         }
-    },
-    highContrast: {
-        name: 'High Contrast',
-        class: 'high-contrast-theme',
-        colors: {
-            base: '#fff',
-            option: '#000',
-            highlight: '#ff0000',
-            links: '#0000ff',
-        }
     }
 };
 
 function getStoredTheme() {
     if (typeof window !== 'undefined') {
-        return localStorage.getItem('theme') || 'light';
+        return localStorage.getItem('theme') || 'cream';
     }
-    return 'light';
+    return 'cream';
 }
 
 export const currentTheme = writable(getStoredTheme());
-
-export function setTheme(themeName) {
-    if (typeof window === 'undefined') return;
-
-    const theme = themes[themeName];
-
-    if (!theme) return;
-
-    Object.values(themes).forEach(t => {
-        if (t.class) {
-            document.documentElement.classList.remove(t.class);
-        }
-    });
-
-    if (theme.class) {
-        document.documentElement.classList.add(theme.class);
-    }
-
-    localStorage.setItem('theme', themeName);
-    currentTheme.set(themeName);
-}
-
-export function toggleDarkMode() {
-    const current = getStoredTheme();
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-}
 
 export function initTheme() {
     if (typeof window === 'undefined') return;
 
     const storedTheme = getStoredTheme();
     setTheme(storedTheme);
+}
+
+export function applyGradientTheme(themeName, gradientCSS) {
+    if (typeof window === 'undefined') return;
+    
+    // Create or update a style element for gradients
+    let gradientStyle = document.getElementById('gradient-theme-styles');
+    if (!gradientStyle) {
+        gradientStyle = document.createElement('style');
+        gradientStyle.id = 'gradient-theme-styles';
+        document.head.appendChild(gradientStyle);
+    }
+    
+    if (themeName === 'sunset') {
+        gradientStyle.textContent = `
+            .sunset-theme {
+                background: ${gradientCSS} !important;
+                background-attachment: fixed !important;
+            }
+        `;
+    } else {
+        gradientStyle.textContent = '';
+    }
+}
+
+// Update the setTheme function to handle gradients
+export function setTheme(themeName) {
+    if (typeof window === 'undefined') return;
+
+    const theme = themes[themeName];
+    if (!theme) return;
+
+    // Remove existing theme classes
+    Object.values(themes).forEach(t => {
+        if (t.class) {
+            document.documentElement.classList.remove(t.class);
+        }
+    });
+
+    // Add new theme class
+    if (theme.class) {
+        document.documentElement.classList.add(theme.class);
+    }
+
+    // Handle special gradient themes
+    if (themeName === 'sunset') {
+        applyGradientTheme(themeName, 'linear-gradient(135deg, #512889 0%, #784072 25%, #9F585B 50%, #C66F44 75%, #ED872D 100%)');
+    } else {
+        applyGradientTheme('', ''); // Clear gradients for non-gradient themes
+    }
+
+    localStorage.setItem('theme', themeName);
+    currentTheme.set(themeName);
 }
