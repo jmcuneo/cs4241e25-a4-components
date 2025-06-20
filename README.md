@@ -1,31 +1,9 @@
-Assignment 4 - Components
-===
-
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
-
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
-
-This project can be implemented on any hosting service (Glitch, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page on Glitch/Heroku/etc., it displays correctly.
-4. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
+## Spending List v.3.0 - Esther Kim
 
 your hosting link e.g. http://a4-charlieroberts.glitch.me
 
 Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
 
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+For this project, I continued building off of my project in a3. In a3, I added express and mongoDB to the initial HTML/CSS/Javascript web application. In this project, I used React to build the User Interface for the index, edit, and spendingList pages, leaving the login and register pages the same. For each HTML page, I created a base jsx file and then a separate jsx file that would actually create the HTML portions, such as dynamically populating tables, and held their respective functions within it to handle interactive portions, such as buttons.
+
+Incorporating React was difficult because I had to change some of the logic as the HTML was being created with Javascript rather than being hardcoded in the HTML files. However, once I started understanding the format of React, it was a lot easier to dynamically create HTML pages using React rather than pure HTML and Javascript alone. Creating the HTML with React gave a lot more flexibility in adding interactive elements to the website. On the other hand, it felt like React was created to work really well with a single page application, so it felt a little awkward building a multi-page application with React.
