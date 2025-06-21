@@ -227,8 +227,8 @@ app.get("/getItem", authenticate, async (req, res) => {
 
 app.post("/edit", authenticate, async (req, res) => {
     if (req.body != undefined) {
-        console.log("POSTEDIT")
-        console.log(req.body)
+        /* console.log("POSTEDIT")
+        console.log(req.body) */
         let updatingItem = req.body;
         updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
         const result = await itemCollection.updateOne( 
