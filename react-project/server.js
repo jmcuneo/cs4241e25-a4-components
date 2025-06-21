@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'; // added so that process.env would work
 dotenv.config();
 import express from 'express';
-import ViteExpress from "vite-express";
+// import ViteExpress from "vite-express";
 import { MongoClient, ObjectId } from "mongodb";
 import { engine as hbs } from 'express-handlebars';
 import session from 'express-session';
@@ -17,13 +17,15 @@ const __dirname = dirname(__filename);
 
 const app = express()
 
+app.use(express.static(path.join(__dirname, 'dist')))
+
 app.engine( "handlebars", hbs() );
 app.set( "view engine", "handlebars" )
 // app.set( "views", "./views" )
 app.set('views', path.join(__dirname, 'views'))
 
 // app.use( express.static( 'views') )
-app.use( '/assets', express.static(path.join(__dirname, 'dist', 'assets'))  )
+// app.use( '/assets', express.static(path.join(__dirname, 'dist', 'assets'))  )
 //app.use( express.static( 'src') )
 //app.use( express.static( 'public') )
 //app.use( express.static( 'views'  ) )
@@ -203,7 +205,7 @@ app.get( "/index", authenticate, (req, res) => {
 })
 
 app.get( '/', authenticate, (req, res) => {
-    res.render('/login', {layout:false});
+    res.render('login', {layout:false});
 })
 
 // app.get('/index', authenticate, (req,res) => {
@@ -278,4 +280,8 @@ const calcMoneySaved = function(paid, discount) {
     return (monCalc - paid).toFixed(2);
 }
 
-ViteExpress.listen( app, process.env.PORT )
+// ViteExpress.listen( app, process.env.PORT )
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`server running on port ${PORT}`)
+})
