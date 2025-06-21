@@ -47,6 +47,7 @@
   }
 </script>
 
+<!-- OTP Modal -->
 {#if showModal}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -57,9 +58,7 @@
         aria-labelledby="otp-title"
         tabindex="-1"
     >
-        <!-- Modal content - no click handlers needed here -->
         <div class="modal-content" role="document">
-            <!-- Close button as proper interactive element -->
             <button 
                 type="button" 
                 class="close-button" 
@@ -74,6 +73,7 @@
             <p>We've sent a verification code to <strong>{currentEmail}</strong></p>
             
             <form on:submit={handleOTPSubmit}>
+              <!-- User inputs their OTP -->
                 <div class="form-group">
                     <label for="otp-input">Enter verification code:</label>
                     <input 
@@ -87,6 +87,7 @@
                     />
                 </div>
                 
+                <!-- Buttons for Modal -->
                 <div class="button-group">
                     <button type="submit" class="btn-primary">Verify</button>
                     <button type="button" class="btn-secondary" on:click={handleClose}>
@@ -98,9 +99,10 @@
     </div>
 {/if}
 
+<!-- CSS -->
 <style>
   .modal-content {
-    background: #f5eed0;
+    background: var(--base);
     border-radius: 8px;
     max-width: 600px;
     width: 90%;
@@ -111,6 +113,7 @@
     padding-left: 2%;
     padding-right: 2%;
     padding-bottom: 1.5%;
+    color: var(--option);
   }
 
   .modal-backdrop {
@@ -124,6 +127,11 @@
     align-items: center;
     z-index: 1000;
     animation: fadeIn 0.2s ease-out;
+  }
+
+  #otp-input {
+    background-color: var(--base);
+    color: var(--option);
   }
 
   @keyframes fadeIn {

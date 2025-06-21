@@ -1,58 +1,9 @@
 import { writable } from 'svelte/store';
+import themesData from './themes.json';
 
-export const themes = {
-    radiance: {
-        name: 'Radiance',
-        class: 'high-contrast-theme',
-        colors: {
-            base: '#fff',
-            option: '#000',
-            highlight: '#ff0000',
-            links: '#0000ff',
-        }
-    },
-    cream: {
-        name: 'Cream',
-        class: '',
-        colors: {
-            base: '#f5eed0',
-            option: '#000',
-            highlight: '#ff5800',
-            links: '#114D9C',
-        }
-    },
-    sunset: {
-        name: 'Sunset',
-        class: 'sunset-theme',
-        colors: {
-            base: '#512889',
-            option: '#fff',
-            highlight: '#ED872D',
-            links: '#C66F44'
-        }
-    },
-    charcoal: {
-        name: 'Charcoal',
-        class: 'dark-theme',
-        colors: {
-            base: '#1a1a1a',
-            option: '#fff',
-            highlight: '#ff6b35',
-            links: '#4a9eff',
-        }
-    },
-    midnight: {
-        name: 'Midnight',
-        class: 'inverted-theme',
-        colors: {
-            base: '#000',
-            option: '#f5eed0',
-            highlight: '#00a8ff',
-            links: '#eb4d2c',
-        }
-    }
-};
+export const themes = themesData.themes;
 
+// Gets the current theme from the user's local storage or defaults to 'cream'
 function getStoredTheme() {
     if (typeof window !== 'undefined') {
         return localStorage.getItem('theme') || 'cream';
@@ -60,8 +11,10 @@ function getStoredTheme() {
     return 'cream';
 }
 
+// Export the current theme for usage in components
 export const currentTheme = writable(getStoredTheme());
 
+// Initalize the theme when the app loads
 export function initTheme() {
     if (typeof window === 'undefined') return;
 
@@ -69,35 +22,23 @@ export function initTheme() {
     setTheme(storedTheme);
 }
 
-export function applyGradientTheme(themeName, gradientCSS) {
-    if (typeof window === 'undefined') return;
-    
-    // Create or update a style element for gradients
-    let gradientStyle = document.getElementById('gradient-theme-styles');
-    if (!gradientStyle) {
-        gradientStyle = document.createElement('style');
-        gradientStyle.id = 'gradient-theme-styles';
-        document.head.appendChild(gradientStyle);
-    }
-    
-    if (themeName === 'sunset') {
-        gradientStyle.textContent = `
-            .sunset-theme {
-                background: ${gradientCSS} !important;
-                background-attachment: fixed !important;
-            }
-        `;
-    } else {
-        gradientStyle.textContent = '';
-    }
-}
-
-// Update the setTheme function to handle gradients
+// This function will set the theme based on the theme name provided
 export function setTheme(themeName) {
     if (typeof window === 'undefined') return;
 
+    // Check if the theme exists in the themes object
     const theme = themes[themeName];
+    // If the theme does not exist, do nothing
     if (!theme) return;
+
+    // Set the CSS variables for the theme
+    // -- This was originally all defined in app.css, but can now be set dynamically
+    // -- I originally wanted to add gradient themes, but I could not get it to work.
+    const root = document.documentElement;
+    root.style.setProperty('--base', theme.colors.base);
+    root.style.setProperty('--option', theme.colors.option);
+    root.style.setProperty('--highlight', theme.colors.highlight);
+    root.style.setProperty('--links', theme.colors.links);
 
     // Remove existing theme classes
     Object.values(themes).forEach(t => {
@@ -111,13 +52,7 @@ export function setTheme(themeName) {
         document.documentElement.classList.add(theme.class);
     }
 
-    // Handle special gradient themes
-    if (themeName === 'sunset') {
-        applyGradientTheme(themeName, 'linear-gradient(135deg, #512889 0%, #784072 25%, #9F585B 50%, #C66F44 75%, #ED872D 100%)');
-    } else {
-        applyGradientTheme('', ''); // Clear gradients for non-gradient themes
-    }
-
+    // Store the theme in local storage and update the currentTheme store
     localStorage.setItem('theme', themeName);
     currentTheme.set(themeName);
 }

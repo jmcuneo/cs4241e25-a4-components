@@ -22,7 +22,7 @@ Do the following to complete this assignment:
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Magnolia
 
 your hosting link e.g. http://a4-charlieroberts.glitch.me
 

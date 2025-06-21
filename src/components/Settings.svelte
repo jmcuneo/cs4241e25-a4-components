@@ -6,6 +6,7 @@
 
     export let showSettings = true;
     export let settingsVisible = false;
+    export let authRequired = false;
     let isHovered = false;
 
     export function toggleSettings(e) {
@@ -13,10 +14,12 @@
         settingsVisible = !settingsVisible;
     }
 
+    // Close the settings menu
     export function closeSettings() {
         settingsVisible = false;
     }
 
+    // Essentially the same as in A3
     export async function changeDisplayName() {
         const currentName = getUserDisplayName() || '';
         const newName = prompt('Enter your new display name:', currentName);
@@ -43,11 +46,13 @@
         }
     }
 
+    // Set the users theme to the selected one, and close the settings menu
     function changeTheme(themeName) {
         setTheme(themeName);
         closeSettings();
     }
 
+    // Logout function
     export async function logout() {
         window.location.href = '/logout';
     }
@@ -55,6 +60,7 @@
 
 {#if showSettings}
     <div id="settings">
+        <!-- Most of this is making it so the gear spins :)-->
         <button 
             id="btn" 
             on:click={toggleSettings}
@@ -78,11 +84,15 @@
                 on:keydown|stopPropagation
                 transition:fly|local="{{ y: -10, duration: 300 }}"
             >
-                <button id="displayName" class="pure-button" on:click={changeDisplayName}>
-                    Change Display Name
-                </button>
+                <!-- Change display name, must be in authenticated page to do -->
+                {#if authRequired}
+                    <button id="displayName" class="pure-button" on:click={changeDisplayName}>
+                        Change Display Name
+                    </button>
+                    <hr>
+                {/if}
 
-                <hr>
+                <!-- Theme Selection, visible on all pages -->
                 <div class="theme-selector">
                     <div class="theme-label">Theme:</div>
                     {#each Object.entries(themes) as [key, theme]}
@@ -94,15 +104,19 @@
                     {/each}
                 </div>
 
-                <hr>
-                <button id="logout" class="pure-button" on:click={logout}>
-                    Logout
-                </button>
+                <!-- Logout, must be in authenticated page to do -->
+                {#if authRequired}
+                    <hr>
+                    <button id="logout" class="pure-button" on:click={logout}>
+                        Logout
+                    </button>
+                {/if}
             </div>
         {/if}
     </div>
 {/if}
 
+<!-- CSS -->
 <style>
     .spinny span {
         animation: spin 4s linear infinite;

@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Header from './Header.svelte';
   import Footer from './Footer.svelte';
+  // Import all of the task functions from tasks.js, which is a feeder from utils/tasks/*.js
   import { 
     tasks, 
     selectedTasks, 
@@ -27,6 +28,7 @@
 
   export let navigateTo;
 
+  // On mounting the component, load all of the tasks
   onMount(() => {
     loadTasks();
   });
@@ -44,17 +46,20 @@
   }
 </script>
 
+<!-- Pull the Header component -->
 <Header 
   greeting="Here are your tasks!" 
   showLogin={false} 
   showRegister={false} 
-  showSettings={true} 
+  showSettings={true}
+  authRequired={true}
   {navigateTo} 
 />
 
 <!-- Task List Table -->
 <table class="pure-table pure-table-striped" id="taskList">
   <thead>
+    <!-- Table Headers, will be adding sorting for final project -->
     <tr>
       <th><input type="checkbox" bind:checked={$selectAll} on:change={handleSelectAll}></th>
       <th>Task Name</th>
@@ -64,6 +69,7 @@
       <th>Deadline</th>
     </tr>
   </thead>
+  <!-- Table body, dynamically import from database-->
   <tbody>
     {#each $tasks as task (task._id)}
       <tr class:completed={task.completed}>
@@ -134,12 +140,14 @@
   </div>
 {/if}
 
+<!-- Pull the Footer component -->
 <Footer
   navigateTo={navigateTo} 
   onHome={false}
   onTasks={true}
 />
 
+<!-- CSS -->
 <style>
   .completed {
     opacity: 0.6;

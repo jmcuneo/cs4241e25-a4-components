@@ -61,11 +61,13 @@
   }
 </script>
 
+<!-- Pull the Header component -->
 <Header 
   greeting="Welcome to Magnolia." 
   showLogin={true} 
   showRegister={false} 
-  showSettings={false} 
+  showSettings={true}
+  authRequired={false}
   {navigateTo} 
 />
 
@@ -75,6 +77,7 @@
     <h2>Register</h2>
   </header>
   <footer>
+    <!-- Take a display name and an email -->
     <form on:submit={handleRegister}>
       <fieldset class="flex">
         <label>
@@ -101,6 +104,7 @@
   </footer>
 </article>
 
+<!-- OTP Component, for registration -->
 <OTP
   bind:showModal
   {currentEmail}
@@ -108,6 +112,7 @@
   on:close={closeModal}
 />
 
+<!-- Footer Component -->
 <Footer 
   navigateTo={navigateTo} 
   onHome={false}

@@ -14,6 +14,7 @@
     }
 </script>
 
+<!-- Footer Contents -->
 <footer class="app-footer">
   <hr class="footer-divider">
   <div class="footer-content">
@@ -32,16 +33,8 @@
   </div>
 </footer>
 
+<!-- CSS -->
 <style>
-    .app-footer {
-        margin-top: 2rem;
-        padding: 1rem 2rem;
-        background-color: var(--base);
-        color: var(--option);
-        border-top: 1px solid var(--option);
-        opacity: 0.3;
-    }
-
     .footer-divider {
         border: none;
         height: 1px;

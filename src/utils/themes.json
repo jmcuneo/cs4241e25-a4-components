@@ -1,0 +1,44 @@
+{
+    "themes": {
+        "radiance": {
+            "name": "Radiance",
+            "class": "high-contrast-theme",
+            "colors": {
+                "base": "#fff",
+                "option": "#000",
+                "highlight": "#ff0000",
+                "links": "#0000ff"
+            }
+        },
+        "cream": {
+            "name": "Cream",
+            "class": "",
+            "colors": {
+                "base": "#f5eed0",
+                "option": "#000",
+                "highlight": "#ff5800",
+                "links": "#114D9C"
+            }
+        },
+        "charcoal": {
+            "name": "Charcoal",
+            "class": "dark-theme",
+            "colors": {
+                "base": "#1a1a1a",
+                "option": "#fff",
+                "highlight": "#ff6b35",
+                "links": "#4a9eff"
+            }
+        },
+        "midnight": {
+            "name": "Midnight",
+            "class": "inverted-theme",
+            "colors": {
+                "base": "#000",
+                "option": "#f5eed0",
+                "highlight": "#00a8ff",
+                "links": "#eb4d2c"
+            }
+        }
+    }
+}

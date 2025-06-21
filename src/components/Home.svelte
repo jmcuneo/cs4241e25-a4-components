@@ -10,11 +10,13 @@
   }
 </script>
 
+<!-- Pull the Header component -->
 <Header 
   greeting="Welcome to Magnolia! What task would you like to add?" 
   showLogin={false} 
   showRegister={false} 
-  showSettings={true} 
+  showSettings={true}
+  authRequired={true}
   {navigateTo} 
 />
 
@@ -41,26 +43,34 @@
   <button id="addTask" type="submit">Add Task</button>
 </form>
 
+<!-- Pull the Footer component -->
 <Footer 
   navigateTo={navigateTo} 
   onHome={true}
   onTasks={false}
 />
 
+<!-- CSS -->
 <style>
   option {
     color: var(--option);
+    background-color: var(--base);
   }
+
+  /* Swap colors if dark */
+  .dark-theme .field,
+  .inverted-theme .field {
+    color: var(--base);
+    background-color: var(--option);
+  }
+
   .field {
     color: var(--option);
+    background-color: var(--base);
   }
   .req {
     color: var(--highlight);
     font-size: 1.4em;
     margin-left: 0.2em;
-  }
-
-  option {
-    background-color: var(--base);
   }
 </style>

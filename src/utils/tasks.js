@@ -4,6 +4,7 @@ export * from './tasks/selectTasks.js';
 export * from './tasks/taskActions.js';
 
 import { get } from 'svelte/store';
+// Import all of the functions from utils/tasks/*.js
 import { tasks, loadTasks as loadTasksOriginal } from './tasks/fetchTask.js';
 import { selectedTasks, selectAll, handleSelectAll as handleSelectAllOriginal, handleTaskSelect as handleTaskSelectOriginal, updateActionMenu } from './tasks/selectTasks.js';
 import { 
@@ -16,7 +17,10 @@ import {
 
 export const loadTasks = loadTasksOriginal;
 
-// Wrapper functions that handle the dependencies
+/*
+    Allow of the below functions are wrappers that handle dependencies needed for the original functions.
+    This is only required because functions are not in the same file anymore.
+*/
 export function handleSelectAll() {
     const currentTasks = get(tasks);
     return handleSelectAllOriginal(currentTasks);

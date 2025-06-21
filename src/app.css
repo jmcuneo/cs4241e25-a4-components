@@ -6,121 +6,6 @@
   --links: #114D9C;
 }
 
-.dark-theme {
-  --base: #1a1a1a;
-  --option: #fff;
-  --highlight: #ff6b35;
-  --links: #4a9eff;
-}
-
-.inverted-theme {
-  --base: #000;
-  --option: #f5eed0;
-  --highlight: #00a8ff;
-  --links: #eb4d2c;
-}
-
-.high-contrast-theme {
-  --base: #fff;
-  --option: #000;
-  --highlight: #ff0000;
-  --links: #000ff;
-}
-
-.sunset-theme {
-  --base: #512889;
-  --option: #fff;
-  --highlight: #ED872D;
-  --links: #C66F44;
-  --gradient-bg: linear-gradient(135deg, #512889 0%, #784072 25%, #9F585B 50%, #C66F44 75%, #ED872D 100%);
-  --gradient-vertical: linear-gradient(to bottom, #512889 0%, #784072 25%, #9F585B 50%, #C66F44 75%, #ED872D 100%);
-  --gradient-horizontal: linear-gradient(to right, #512889 0%, #784072 25%, #9F585B 50%, #C66F44 75%, #ED872D 100%);
-}
-
-.sunset-theme html {
-  background: var(--gradient-bg);
-}
-
-.sunset-theme body {
-  background: var(--gradient-bg);
-  background-attachment: fixed;
-  height: device-height;
-}
-
-.sunset-theme .app-footer {
-  background: rgba(237, 135, 45, 0.9);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.sunset-theme .field {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: var(--option);
-  backdrop-filter: blur(5px);
-}
-
-.sunset-theme .field:focus {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--highlight);
-  box-shadow: 0 0 0 2px rgba(237, 135, 45, 0.3);
-}
-
-.sunset-theme .field::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Cards and modals with gradient overlay */
-.sunset-theme .card,
-.sunset-theme #editModal #contents,
-.sunset-theme #deleteModal #contents {
-  background: rgba(81, 40, 137, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* Table styling for sunset theme */
-.sunset-theme #taskList {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.sunset-theme #taskList th {
-  background: rgba(237, 135, 45, 0.3);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.sunset-theme #taskList td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sunset-theme .pure-table-striped tbody tr:nth-child(2n) td {
-  background: rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Settings menu for sunset theme */
-.sunset-theme #settingsMenu {
-  background: rgba(81, 40, 137, 0.95) !important;
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* Buttons with gradient effects */
-.sunset-theme #addTask {
-  background: linear-gradient(45deg, var(--highlight), var(--links));
-  border: none;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.sunset-theme #addTask:hover {
-  background: linear-gradient(45deg, var(--links), var(--highlight));
-  transform: scale(1.05);
-}
-
 /* Site-wide properties */
 html {
   background-color: var(--base);
@@ -174,6 +59,12 @@ a:not(:hover) {
 }
 
 /* Header Content */
+.app-header {
+  background-color: var(--base);
+  padding: 1rem;
+  color: var(--option);
+}
+
 .header-logo {
   display: flex;
   align-items: center;
@@ -232,26 +123,38 @@ a:not(:hover) {
 }
 
 #settingsMenu button:hover {
-  background-color: var(--highlight);
   color: var(--base);
+}
+
+/* Footer Content */
+.app-footer {
+  background-color: var(--base);
+  color: var(--option);
+  border-top: 1px solid var(--option);
 }
 
 /* Login/Register */
 .card {
+  background-color: var(--base);
   margin-top: 5%;
   margin-left: 10%;
   width: 75%;
-  background-color: #f5eed0;
 }
 
 .card header {
   margin-left: 0;
+  color: var(--option);
+}
+
+.card input {
+  color: var(--base);
+  font-size: 1.1rem;
 }
 
 .card button {
   width: 6%;
-  background-color: #ff5800;
-  color: #000;
+  background-color: var(--highlight);
+  color: var(--option);
   width: fit-content;
 }
 
@@ -278,7 +181,7 @@ label {
   font-size: 1rem;
   border: 1px solid var(--option);
   border-radius: 0.25rem;
-  background-color: var(--base);
+  color: var(--option);
   box-sizing: border-box;
   margin-bottom: 1rem;
   line-height: 1.4;

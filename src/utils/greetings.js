@@ -2,18 +2,25 @@ import { getUserDisplayName } from './auth.js';
 
 export const defaultGreeting = 'Welcome!';
 
+// Get personalised greeting based on the user's display name and the current context
 export function getPersonalizedGreeting(baseGreeting = defaultGreeting, displayName = null) {
     // Get display name if not provided
     const name = displayName || getUserDisplayName();
     
+    // Replace the placeholder with the user's display name if it exists
     if (name && baseGreeting.includes('{displayName}')) {
         return baseGreeting.replace('{displayName}', name);
     } else if (name) {
+        // Otherwise, specific phrase for /tasks
         if (baseGreeting.includes('your tasks')) {
             return `Here are your tasks, ${name}!`;
-        } else if (baseGreeting.includes('Welcome')) {
+        }
+        // Specific phrase for /home 
+        else if (baseGreeting.includes('Welcome')) {
             return `Welcome, ${name}!`;
-        } else {
+        }
+        // Generic case 
+        else {
             return `${baseGreeting.replace('!', '')}, ${name}`;
         }
     } else {
@@ -21,6 +28,8 @@ export function getPersonalizedGreeting(baseGreeting = defaultGreeting, displayN
     }
 }
 
+// Get a time-based greeting based on the current hour and user's display name
+// This should never be seen, as the user should always have a display name if on a page that this would be called on
 export function getTimeBasedGreeting(displayName = null) {
     const hour = new Date().getHours();
     const name = displayName || getUserDisplayName();
@@ -35,6 +44,7 @@ export function getTimeBasedGreeting(displayName = null) {
     }
 }
 
+// Get a contextual greeting based on the current page or context
 export function getContextualGreeting(context = 'default', displayName = null) {
     const name = displayName || getUserDisplayName();
     const nameText = name ? `, ${name}` : '';

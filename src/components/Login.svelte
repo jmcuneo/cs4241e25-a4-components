@@ -32,7 +32,7 @@
       
       if (data.status === 'success') {
         currentEmail = email;
-        showModal = true; // Use Svelte reactivity
+        showModal = true; 
       } else {
         swal('Error', data.message || 'Failed to send OTP. Please try again.', 'error');
       }
@@ -46,11 +46,13 @@
   }
 </script>
 
+<!-- Pull the Header component -->
 <Header 
   greeting="Please log in to continue" 
   showLogin={false} 
   showRegister={true} 
-  showSettings={false} 
+  showSettings={true}
+  authRequired={false} 
   {navigateTo} 
 />
 
@@ -75,6 +77,7 @@
   </footer>
 </article>
 
+<!-- OTP Component, for logging in -->
 <OTP
   bind:showModal
   {currentEmail}
@@ -82,6 +85,7 @@
   on:close={closeModal}
 />
 
+<!-- Footer Component -->
 <Footer 
   navigateTo={navigateTo} 
   onHome={false}

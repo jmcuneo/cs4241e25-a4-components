@@ -9,35 +9,37 @@
     export let showRegister = false;
     export let showLogin = false;
     export let showSettings = true;
+    export let authRequired = false;
     export let navigateTo;
 
     let displayName = '';
     let currentGreeting = '';
     let settingsComponent;
 
+    // Set the logo path based on theme (if a dark theme use Magnolia-white, otherwise use Magnolia)
     $: logoPath = ($currentTheme === 'charcoal' || $currentTheme === 'midnight')
       ? 'src/assets/Magnolia-white.png'
       : 'src/assets/Magnolia.png'
 
+    // Get the greeting when the component is nounted
     onMount(() => {
+      // Get the user's display name
         displayName = getUserDisplayName();
+        // Update their greeting based on greetings.js
         updateGreeting();
     })
 
+    // Function to update the greeting. Use personalized if possible, otherwise default to time-based greeting
     function updateGreeting() {
         if (greeting) {
             currentGreeting = greetings.getPersonalizedGreeting(greeting, displayName);
         } else {
+          // This should never happen, as it would only occur if a non-logged in user visits a locked page
             currentGreeting = greetings.getTimeBasedGreeting(displayName)
         }
     }
 
-    function handleSettingsToggle(e) {
-      if (settingsComponent) {
-        settingsComponent.toggleSettings(e);
-      }
-    }
-
+    // Close settings when clicking outside of the settings component
     function handleSettingsClose() {
         if (settingsComponent) {
             settingsComponent.closeSettings();
@@ -49,6 +51,7 @@
     }
 </script>
 
+<!-- If click outside of settings window, close the settings window -->
 <svelte:window on:click={handleSettingsClose} />
 
 <!-- Header of the page -->
@@ -59,16 +62,19 @@
       <h1>Magnolia</h1>
     </div>
 
+    <!-- Settings Menu -->
     {#if showSettings}
       <div class="settings-container">
-        <Settings bind:this={settingsComponent}/>
+        <Settings bind:this={settingsComponent} {authRequired}/>
       </div>
     {/if}
   </div>
 
+  <!-- Greetings -->
   <div class="header-greeting" style="display: flex; align-items: center;">
     <span class="greeting">
       {currentGreeting}
+      <!-- For non-authenticated pages, allows for registration and logging in -->
       {#if showRegister}
         or <a href="/register" on:click|preventDefault={() => navigateTo && navigateTo('register')}>register</a> here
     {/if}
@@ -80,13 +86,8 @@
 </header>
 <hr class="header-divider">
 
+<!-- CSS -->
 <style>
-  .app-header {
-    background-color: var(--base);
-    color: var(--option);
-    padding: 1rem;
-  }
-
   .header-top {
     display: flex;
     justify-content: space-between;
