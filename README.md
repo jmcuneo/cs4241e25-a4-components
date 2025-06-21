@@ -1,31 +1,10 @@
-Assignment 4 - Components
-===
+## Magnolia
+https://a4.greenbueller.com
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+This is a continuation of my A2/A3 assignment. In this version, I implemented Svelte. Svelte enabled me to modularize a lot of common aspects of the website into separate components, and it made a lot of the final page development a lot easier. The most complicated portion was just the initial setup, as it took me a while to get Vite actually working. From there, it was simply just convert my JS/HTML into Svelte components.
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+What I changed in this version is the header and footer are now components that are called across every page, with unique attributes in the header for every page using booleans. Additionally, the OTP system was made into a component and shared across /login and /register. And finally, I added a theme system, where the user can select from one of four themes on any page, and it will stay consistent across their entire session (even if they log in or get logged out).
 
-This project can be implemented on any hosting service (Glitch, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+In the end, I think this helped me with development, I just wish I was able to understand it quicker.
 
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page on Glitch/Heroku/etc., it displays correctly.
-4. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
-
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+One side note I would like to mention is that I tried to add a gradient-based theme, but I could not get it to work with my current system. If there are any resources that could help me get it to work, I would really appreciate seeing them.
