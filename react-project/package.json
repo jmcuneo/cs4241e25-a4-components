@@ -10,6 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
