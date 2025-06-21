@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'; // added so that process.env would work
 dotenv.config();
 import express from 'express';
-// import ViteExpress from "vite-express";
+import ViteExpress from "vite-express";
 import { MongoClient, ObjectId } from "mongodb";
 import { engine as hbs } from 'express-handlebars';
 import session from 'express-session';
@@ -17,15 +17,12 @@ const __dirname = dirname(__filename);
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, 'dist')))
-
 app.engine( "handlebars", hbs() );
 app.set( "view engine", "handlebars" )
-// app.set( "views", "./views" )
-app.set('views', path.join(__dirname, 'views'))
+app.set( "views", "./views" )
 
 // app.use( express.static( 'views') )
-// app.use( '/assets', express.static(path.join(__dirname, 'dist', 'assets'))  )
+// app.use( express.static(path.join(__dirname, 'dist'))  )
 //app.use( express.static( 'src') )
 //app.use( express.static( 'public') )
 //app.use( express.static( 'views'  ) )
@@ -190,22 +187,11 @@ app.post( "/register", async (req, res) => {
 })
 
 app.get( "/index", authenticate, (req, res) => {
-    // const fullPath = path.join(__dirname, 'dist', 'index.html')
-    // console.log("GET /index -> sending", fullPath)
-
-    // res.sendFile(fullPath, (err) => {
-    //     if (err) {
-    //         console.error("error sending index.html", err);
-    //         res.status(500).send("internalservererror")
-    //     } else {
-    //         console.log("sent index.html successfully")
-    //     }
-    // })
     res.render('index', {layout:false});
 })
 
 app.get( '/', authenticate, (req, res) => {
-    res.render('login', {layout:false});
+    res.render('/login', {layout:false});
 })
 
 // app.get('/index', authenticate, (req,res) => {
@@ -280,8 +266,4 @@ const calcMoneySaved = function(paid, discount) {
     return (monCalc - paid).toFixed(2);
 }
 
-// ViteExpress.listen( app, process.env.PORT )
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`)
-})
+ViteExpress.listen( app, process.env.PORT )
