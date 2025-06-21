@@ -21,11 +21,10 @@ app.engine( "handlebars", hbs() );
 app.set( "view engine", "handlebars" )
 app.set( "views", "./views" )
 
-
-app.use( express.static(path.join(__dirname, 'dist'))  )
+// app.use( express.static( 'views') )
+// app.use( express.static(path.join(__dirname, 'dist'))  )
 //app.use( express.static( 'src') )
 //app.use( express.static( 'public') )
-app.use( express.static( 'views') )
 //app.use( express.static( 'views'  ) )
 app.use( express.json() )
 
@@ -192,8 +191,13 @@ app.get( "/index", authenticate, (req, res) => {
 })
 
 app.get( '/', authenticate, (req, res) => {
-    res.render('/views/index', {layout:false});
+    res.render('/login', {layout:false});
 })
+
+// app.get('/index', authenticate, (req,res) => {
+//     res.sendFile(path.join(__dirname, 'views', 'index.html'))
+// });
+
 
 app.get( "/spending-list", authenticate, (req,res) => {
     //res.set('Cache-Control', 'no-cache');
