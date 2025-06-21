@@ -18,8 +18,8 @@
 
     // Set the logo path based on theme (if a dark theme use Magnolia-white, otherwise use Magnolia)
     $: logoPath = ($currentTheme === 'charcoal' || $currentTheme === 'midnight')
-      ? 'src/assets/Magnolia-white.png'
-      : 'src/assets/Magnolia.png'
+      ? '/media/Magnolia-white.png'
+      : '/media/Magnolia.png'
 
     // Get the greeting when the component is nounted
     onMount(() => {
