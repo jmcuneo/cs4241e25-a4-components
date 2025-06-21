@@ -188,7 +188,18 @@ app.post( "/register", async (req, res) => {
 })
 
 app.get( "/index", authenticate, (req, res) => {
-    res.render('index', {layout:false});
+    const fullPath = path.join(__dirname, 'dist', 'index.html')
+    console.log("GET /index -> sending", fullPath)
+
+    res.sendFile(fullPath, (err) => {
+        if (err) {
+            console.error("error sending index.html", err);
+            res.status(500).send("internalservererror")
+        } else {
+            console.log("sent index.html successfully")
+        }
+    })
+    // res.render('index', {layout:false});
 })
 
 app.get( '/', authenticate, (req, res) => {
