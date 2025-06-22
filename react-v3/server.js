@@ -191,7 +191,7 @@ app.get( "/", authenticate, (req, res) => {
 
 app.get( "/spendinglist.html", authenticate, (req,res) => {
     //res.set('Cache-Control', 'no-cache');
-    res.sendFile(path.join(__dirname, 'views', 'spendinglist.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'spendinglist.html'));
 })
 
 app.get("/obtainData.json", authenticate, async (req, res) => {

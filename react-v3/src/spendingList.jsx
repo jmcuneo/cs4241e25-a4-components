@@ -84,7 +84,7 @@ const SpendingList = () => {
   return (
     <div className="App">
         <nav>
-          <a className="nava" href="/index">Add Item to List</a>
+          <a className="nava" href="/index.html">Add Item to List</a>
           <a className="nava" href="/logout">Logout</a>
         </nav>
 
