@@ -1,0 +1,49 @@
+body {
+  background: #F4C6DF !important;;
+  color: #3A2F23;
+  font-family: "Arvo", serif !important;;
+  font-weight: 400 !important;;
+  font-style: normal !important;;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  background-color: #95C4CF;
+  border: 10px solid, #95C4CF;
+  text-align: right;
+  font-family: "Arvo", serif;
+  font-weight: 400;
+  font-style: normal;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  
+}
+
+.nava {
+  background-color: #A38AC2;
+  border: 10px solid, #A38AC2;
+  text-decoration-color: aliceblue;
+  color:aliceblue;
+}
+
+.nava:hover {
+  background-color: #604580;
+  border: 10px solid, #604580;
+}
+
+.nava:focus {
+  background-color: #922887;
+  border: 10px solid, #922887;
+}
+
+.nava:active {
+  background-color: #6244c2;
+  border: 10px solid, #6244c2;
+}
