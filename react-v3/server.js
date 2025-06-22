@@ -153,15 +153,15 @@ app.post( "/login.html", async (req, res) => {
         res.redirect('/index.html');
     } else {
         res.status(401);
-        res.sendFile(path.join(__dirname, 'views', 'login.html'));
+        res.sendFile(path.join(__dirname, 'public', 'login.html'));
     }
 })
 
 app.get( "/register.html", async (req, res) => {
     if (req.session.loggedIn === true) {
-        res.sendFile(path.join(__dirname, 'views', 'index.html'));
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
     } else {
-        res.sendFile(path.join(__dirname, 'views', 'register.html'));
+        res.sendFile(path.join(__dirname, 'public', 'register.html'));
     }
 })
 
@@ -174,7 +174,7 @@ app.post( "/register.html", async (req, res) => {
         res.redirect('/login.html');
     } else {
         res.status(422);
-        res.sendFile(path.join(__dirname, 'views', 'register.html'));
+        res.sendFile(path.join(__dirname, 'public', 'register.html'));
     }
 })
 
@@ -183,7 +183,7 @@ app.get( "/index.html", authenticate, (req, res) => {
 })
 
 app.get( "/", authenticate, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 
 app.get( "/spendinglist.html", authenticate, (req,res) => {
