@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'index.html'),
         spendinglist: resolve(__dirname, 'spendinglist.html'),
+        edit: resolve(__dirname, 'edit.html'),
       },
     },
     outDir: 'dist',

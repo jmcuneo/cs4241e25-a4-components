@@ -26,7 +26,7 @@ const SpendingList = () => {
   } */
 
     function editPage(idNum) {
-        fetch( `edit?itemID=${idNum}`, {
+        fetch( `/edit.html?itemID=${idNum}`, {
             method: "GET",
         }).then( response => {
             if (response.status !== 200) {
@@ -40,7 +40,7 @@ const SpendingList = () => {
     function deleteItem(idNum) {
         const theid = { "_id": idNum }
 
-        fetch( "deleteItem", {
+        fetch( "/deleteItem", {
             method: "DELETE",
             headers: {
             "Content-Type": "application/json",

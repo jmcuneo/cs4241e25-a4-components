@@ -204,7 +204,7 @@ app.get("/obtainData.json", authenticate, async (req, res) => {
 
 app.get("/edit.html", authenticate, async (req, res) => {
     req.session.editItemID = req.query.itemID;
-    res.sendFile(path.join(__dirname, 'views', 'edit.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'edit.html'));
 })
 
 app.get("/getItem", authenticate, async (req, res) => {
@@ -215,14 +215,16 @@ app.get("/getItem", authenticate, async (req, res) => {
     res.json(itemToEdit);
 })
 
-app.post("/update", authenticate, async (req, res) => {
+app.post("/edit.html", authenticate, async (req, res) => {
     let updatingItem = req.body;
-    updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
-    const result = await itemCollection.updateOne( 
-        { _id: new ObjectId( req.session.editItemID ) },
-        { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
-    );
-    res.redirect('/spendinglist.html');
+    if (updatingItem != undefined) {
+        updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
+        const result = await itemCollection.updateOne( 
+            { _id: new ObjectId( req.session.editItemID ) },
+            { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
+        );
+        res.redirect('/spendinglist.html');
+    }
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.

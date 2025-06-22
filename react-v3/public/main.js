@@ -127,7 +127,6 @@ const getItem = async function() {
 }
 
 const editPage = async function(idNum) {
-  console.log(idNum);
   await fetch( `edit.html?itemID=${idNum}`, {
     method: "GET",
   }).then( function(serverresponse) {
@@ -188,7 +187,6 @@ const register = async function(event) {
         json = { "username": regusername.value, "password": regpassword.value },
         regbody = JSON.stringify( json )
 
-  console.log(regusername.checkValidity());
   if (!regusername.checkValidity()) {
     alert("Username cannot be empty!");
   } else if (!regpassword.checkValidity()) {
