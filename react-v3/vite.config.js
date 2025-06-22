@@ -8,9 +8,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        home: resolve(__dirname, 'views/login.html'),
-        about: resolve(__dirname, 'views/register.html'),
+        index: resolve(__dirname, 'index.html'),
+        spendinglist: resolve(__dirname, 'spendinglist.html'),
       },
     },
+    outDir: 'dist',
   },
 })

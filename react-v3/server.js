@@ -1,30 +1,25 @@
 import dotenv from 'dotenv'; // added so that process.env would work
 dotenv.config();
 import express from 'express';
-import ViteExpress from "vite-express";
 import { MongoClient, ObjectId } from "mongodb";
-import { engine as hbs } from 'express-handlebars';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github';
-
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const distDir = path.join(__dirname, 'dist');
+const assetsDir = path.join(distDir, 'assets');
 
-const app = express()
+const app = express();
 
-app.engine( "handlebars", hbs() );
-app.set( "view engine", "handlebars" )
-app.set( "views", "./views" )
-
-// app.use( express.static( 'views') )
-// app.use( express.static(path.join(__dirname, 'dist'))  )
-//app.use( express.static( 'src') )
-//app.use( express.static( 'public') )
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use( express.static( 'public' ) )
+app.use('/assets', express.static(assetsDir));
+//app.use( express.static(path.join(__dirname, 'dist'))  )
 //app.use( express.static( 'views'  ) )
 app.use( express.json() )
 
@@ -57,7 +52,7 @@ function authenticate(req, res, next) {
         next();
     } else {
         res.status(403);
-        res.redirect('login');
+        res.redirect('/login.html');
     }
 }
 
@@ -97,7 +92,7 @@ app.use( (req,res,next) => {
 passport.use(new GitHubStrategy({
     clientID: `${process.env.GITHUB_CLIENT_ID}`,
     clientSecret: `${process.env.GITHUB_CLIENT_SECRET}`,
-    callbackURL: "https://a4-estherkim.onrender.com/auth/github/callback"
+    callbackURL: "https://a3-estherkim.onrender.com/auth/github/callback"
 },
 function(accessToken, refreshToken, profile, cb) {
     cb(null, profile);
@@ -109,7 +104,7 @@ app.get('/auth/github',
   passport.authenticate('github'));
 
 app.get('/auth/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/login.html' }),
   async function (req, res) {
     // Successful authentication, redirect home.
     req.session.loggedIn = true;
@@ -134,11 +129,11 @@ app.post( "/add", async (req, res) => {
     res.json( result );
 })
 
-app.get( "/login", async (req, res) => {
+app.get( "/login.html", async (req, res) => {
     if (req.session.loggedIn === true) {
-        res.render('index', {layout:false});
+        res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     } else {
-        res.render('login', {layout:false});
+        res.sendFile(path.join(__dirname, 'public', 'login.html'));
     }
 })
 
@@ -147,61 +142,56 @@ app.get("/logout", async (req, res, next) => {
         if (err) { return next(err); }
     req.session.loggedIn = false;
     req.session.userId = null;
-    res.redirect('login');
+    res.redirect('/login.html');
     })
 })
 
-app.post( "/login", async (req, res) => {
+app.post( "/login.html", async (req, res) => {
     const userExistsCount = await usersCollection.countDocuments({ username: req.body.username, password: req.body.password });
     if (userExistsCount !== 0) {
         req.session.loggedIn = true;
         const currentuser = await usersCollection.findOne({ username: req.body.username, password: req.body.password });
         req.session.userID = currentuser._id.toString();
         res.status(200);
-        res.redirect('index');
+        res.redirect('/index.html');
     } else {
         res.status(401);
-        res.render('login', {layout:false});
+        res.sendFile(path.join(__dirname, 'views', 'login.html'));
     }
 })
 
-app.get( "/register", async (req, res) => {
+app.get( "/register.html", async (req, res) => {
     if (req.session.loggedIn === true) {
-        res.render('index', {layout:false});
+        res.sendFile(path.join(__dirname, 'views', 'index.html'));
     } else {
-        res.render('register', {layout:false});
+        res.sendFile(path.join(__dirname, 'views', 'register.html'));
     }
 })
 
-app.post( "/register", async (req, res) => {
+app.post( "/register.html", async (req, res) => {
     const userExistsCount = await usersCollection.countDocuments({ username: req.body.username });
     if (userExistsCount === 0 && req.body.username !== null && req.body.username !== "") {
         let insertingUser = req.body;
         const result = await usersCollection.insertOne( insertingUser );
         res.status(200);
-        res.redirect('login');
+        res.redirect('/login.html');
     } else {
         res.status(422);
-        res.render('register', {layout:false});
+        res.sendFile(path.join(__dirname, 'views', 'register.html'));
     }
 })
 
-app.get( "/index", authenticate, (req, res) => {
-    res.render('index', {layout:false});
+app.get( "/index.html", authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 
-app.get( '/', authenticate, (req, res) => {
-    res.render('/login', {layout:false});
+app.get( "/", authenticate, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 })
 
-// app.get('/index', authenticate, (req,res) => {
-//     res.sendFile(path.join(__dirname, 'views', 'index.html'))
-// });
-
-
-app.get( "/spending-list", authenticate, (req,res) => {
+app.get( "/spendinglist.html", authenticate, (req,res) => {
     //res.set('Cache-Control', 'no-cache');
-    res.render('spending-list', {layout: false});
+    res.sendFile(path.join(__dirname, 'views', 'spendinglist.html'));
 })
 
 app.get("/obtainData.json", authenticate, async (req, res) => {
@@ -212,9 +202,9 @@ app.get("/obtainData.json", authenticate, async (req, res) => {
     res.json(allItems);
 })
 
-app.get("/edit", authenticate, async (req, res) => {
+app.get("/edit.html", authenticate, async (req, res) => {
     req.session.editItemID = req.query.itemID;
-    res.render('edit', {layout:false});
+    res.sendFile(path.join(__dirname, 'views', 'edit.html'));
 })
 
 app.get("/getItem", authenticate, async (req, res) => {
@@ -225,18 +215,14 @@ app.get("/getItem", authenticate, async (req, res) => {
     res.json(itemToEdit);
 })
 
-app.post("/edit", authenticate, async (req, res) => {
-    if (req.body != undefined) {
-        /* console.log("POSTEDIT")
-        console.log(req.body) */
-        let updatingItem = req.body;
-        updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
-        const result = await itemCollection.updateOne( 
-            { _id: new ObjectId( req.session.editItemID ) },
-            { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
-        );
-        res.redirect('spending-list');
-    }
+app.post("/update", authenticate, async (req, res) => {
+    let updatingItem = req.body;
+    updatingItem.moneySaved = calcMoneySaved( parseFloat(updatingItem.price), parseFloat(updatingItem.discount) );
+    const result = await itemCollection.updateOne( 
+        { _id: new ObjectId( req.session.editItemID ) },
+        { $set:{ item:updatingItem.item, price:updatingItem.price, discount:updatingItem.discount, category:updatingItem.category, note:updatingItem.note, moneySaved: updatingItem.moneySaved } }
+    );
+    res.redirect('/spendinglist.html');
 })
 
 // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
@@ -266,4 +252,4 @@ const calcMoneySaved = function(paid, discount) {
     return (monCalc - paid).toFixed(2);
 }
 
-ViteExpress.listen( app, process.env.PORT )
+app.listen( process.env.PORT || 4000 )
