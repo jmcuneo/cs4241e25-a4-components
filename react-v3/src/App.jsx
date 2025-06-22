@@ -1,14 +1,4 @@
 import React, { useState, useEffect } from 'react'
-//import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-//import EditPage from './editPage.jsx'
-//import SpendingList from './spendingList.jsx'
-
-/* const Todo = props => (
-  <li>{props.name} : 
-    <input type="checkbox" defaultChecked={props.completed} onChange={ e => props.onclick( props.name, e.target.checked ) }/>
-  </li>
-) */
-
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -16,13 +6,6 @@ const App = () => {
   const [pvalue, setPValue] = useState("");
   const [dvalue, setDValue] = useState("");
   const [nvalue, setNValue] = useState("");
-  /* function toggle( name, completed ) {
-    fetch( '/change', {
-      method:'POST',
-      body: JSON.stringify({ name, completed }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-  } */
 
   function add() {
     const item = document.querySelector( "#item" ),
@@ -49,19 +32,6 @@ const App = () => {
        window.location.reload();
     })
   }
-  
-  // make sure to only do this once
-  /* if( todos.length === 0 ) {
-    fetch( '/read' )
-      .then( response => response.json() )
-      .then( json => {
-        setTodos( json ) 
-      })
-  }
-    
-  useEffect( ()=> {
-    document.title = `${todos.length} todo(s)`
-  }) */
 
   return (
     <>

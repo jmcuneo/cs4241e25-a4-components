@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-/* const Todo = props => (
-  <li>{props.name} : 
-    <input type="checkbox" defaultChecked={props.completed} onChange={ e => props.onclick( props.name, e.target.checked ) }/>
-  </li>
-) */
-
-
 const EditPage = () => {
     const [items, setItems] = useState([ ]) 
     const [ivalue, setIValue] = useState(items.item);
@@ -15,13 +8,6 @@ const EditPage = () => {
     const [nvalue, setNValue] = useState("");
     
     const [cvalue, setCValue] = useState("");
-  /* function toggle( name, completed ) {
-    fetch( '/change', {
-      method:'POST',
-      body: JSON.stringify({ name, completed }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-  } */
 
   function edit() {
     const eitem = document.querySelector( "#eitem" ),
@@ -46,22 +32,7 @@ const EditPage = () => {
           }
     })
   }
-  
-  // make sure to only do this once
-  /* if( todos.length === 0 ) {
-    fetch( '/read' )
-      .then( response => response.json() )
-      .then( json => {
-        setTodos( json ) 
-      })
-  }
-    
-  useEffect( ()=> {
-    document.title = `${todos.length} todo(s)`
-  }) 
 
-  <option hidden disabled selected value> -- select an option -- </option>
-  */
     if (items.length === 0) {
         fetch( `/getItem`, {
             method: "GET",

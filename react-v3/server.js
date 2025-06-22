@@ -16,11 +16,8 @@ const assetsDir = path.join(distDir, 'assets');
 
 const app = express();
 
-// app.use(express.static(path.join(__dirname, 'public')));
 app.use( express.static( 'public' ) )
 app.use('/assets', express.static(assetsDir));
-//app.use( express.static(path.join(__dirname, 'dist'))  )
-//app.use( express.static( 'views'  ) )
 app.use( express.json() )
 
 app.use(session({

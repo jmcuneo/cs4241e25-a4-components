@@ -17,13 +17,6 @@ const Items = item => (
 
 const SpendingList = () => {
   const [allItems, setAllItems] = useState([ ]) 
-  /* function toggle( name, completed ) {
-    fetch( '/change', {
-      method:'POST',
-      body: JSON.stringify({ name, completed }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-  } */
 
     function editPage(idNum) {
         fetch( `/edit.html?itemID=${idNum}`, {
@@ -67,19 +60,6 @@ const SpendingList = () => {
             setAllItems(json);
         })
     }
-
-  // make sure to only do this once
-  /* if( todos.length === 0 ) {
-    fetch( '/read' )
-      .then( response => response.json() )
-      .then( json => {
-        setTodos( json ) 
-      })
-  }
-    
-  useEffect( ()=> {
-    document.title = `${todos.length} todo(s)`
-  }) */
 
   return (
     <div className="App">
