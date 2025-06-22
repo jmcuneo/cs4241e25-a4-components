@@ -1,0 +1,17 @@
+{
+  "name": "cs4241e25-a4-katherinetse",
+  "version": "1.0.0",
+  "description": "Assignment 4 - Components",
+  "author": "Katherine Tse",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0"
+  }
+}
