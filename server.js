@@ -1,22 +1,27 @@
-const express = require('express'),
-      cookie = require('cookie-session'),
-      { MongoClient, ObjectId } = require('mongodb'),
-      app = express();
+import express from 'express'
+import ViteExpress from 'vite-express'
+import cookieSession from 'cookie-session'
+import { MongoClient, ObjectId } from 'mongodb'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const app = express();
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // enable cookies
-app.use(cookie({
+const cookie = cookieSession({
     name: 'session',
     keys: ['tempKey1', 'tempKey2']
-}))
+})
+
+app.use(cookie);
 
 app.use(express.static('public'))
-
-// needed to use .env file
-require('dotenv').config();
+app.use(express.static('src'))
 
 // for connecting to MongoDB database
 const uri = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PASS}@${process.env.MDB_HOST}`;
@@ -115,7 +120,7 @@ app.use(function(req, res, next) {
 
 // path to main page
 app.get('/app.html', (req, res) => {
-    res.render('/app.html')
+    res.sendFile(__dirname + 'src/app.html')
 })
 
 // variables for data manipulation
@@ -144,7 +149,7 @@ app.post ('/submit', (req, res) => {
             if ( data.id ) { // if there is an ID, update the corresponding information
                 //console.log(data)
                 const result = await collection.updateOne({user:currUser, id: data.id}, {$set:{compInfo:data.compInfo, level:data.level, vaultScore:data.vaultScore, barScore:data.barScore, beamScore:data.beamScore, floorScore:data.floorScore, totalScore:data.totalScore}})
-                //console.log(result)
+                console.log(result)
             } else { // if no existing ID, add new data entry
                 let finalData = {"user": currUser, "id": `${nextID}`, ...data}
                 await collection.insertOne(finalData)
@@ -191,4 +196,5 @@ app.get('/loadData', async (req, res) => {
     }
 })
 
-app.listen(3000)
+//app.listen(3000)
+ViteExpress.listen( app, 3000 )
