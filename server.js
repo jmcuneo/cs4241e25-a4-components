@@ -3,6 +3,8 @@ import ViteExpress from 'vite-express'
 import cookieSession from 'cookie-session'
 import { MongoClient, ObjectId } from 'mongodb'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
 
@@ -47,6 +49,9 @@ run().catch(console.dir);
 // variables to store info for tracking user sessions
 let currUser = "";
 let newUser = false;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // how to handle user's attempt to login
 app.post ('/login', async (req, res) => {
@@ -195,6 +200,12 @@ app.get('/loadData', async (req, res) => {
         nextID = comps.length + 1;
     }
 })
+
+
+
+// app.get('/lib/app.js', (req, res) => {
+//     res.sendFile(__dirname + '/lib/app.js')
+// })
 
 //app.listen(3000)
 ViteExpress.listen( app, 3000 )
