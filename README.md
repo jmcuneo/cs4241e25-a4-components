@@ -12,10 +12,12 @@ Do the following to complete this assignment:
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Gymnastics Competition Personal Score Tracker
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+Hosting Link: 
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+**Project Summary**: This project is an application that allows gymnasts to store their scores all in one place. TO start, users can log into their account to see their data. They can also input their event scores by competition and the application will calculate the total (also known as All-Around) score. Users can delete and edit entries as well. The data is persistent using MongoDB. 
 
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+**Changes**: While the UI and user experince did not change, I took the entirety of the data manipulation, management, and display and rewrote it using React. I also added Vite to the server. 
+
+**Improve or Hinder?**: React really does improve functionality in my opinion. It made it a lot easier to share variables between different functions, smplify a lot of functions and reduce redundancy. However, I had an incredibly difficult time deploying the applicaiton. I used Babel to build my JSX files and the deployment could not find the build output JS file. 
