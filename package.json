@@ -5,7 +5,7 @@
   "author": "Katherine Tse",
   "type": "module",
   "scripts": {
-    "build": "babel src -d public/lib",
+    "build": "babel src -d lib",
     "test": "node server.js",
     "start": "node server.js"
   },
