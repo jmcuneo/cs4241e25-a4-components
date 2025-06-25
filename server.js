@@ -10,20 +10,26 @@ dotenv.config()
 
 const app = express();
 
-
+app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // enable cookies
 const cookie = cookieSession({
     name: 'session',
-    keys: ['tempKey1', 'tempKey2']
+    keys: ['tempKey1', 'tempKey2'],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
 })
 
 app.use(cookie);
 
-app.use(express.static('public'))
-app.use(express.static('src'))
+// app.use(express.static('public'))
+// app.use(express.static('src'))
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const buildPath = path.join(__dirname, 'build');
+app.use(express.static(buildPath))
 
 // for connecting to MongoDB database
 const uri = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PASS}@${process.env.MDB_HOST}`;
@@ -50,11 +56,8 @@ run().catch(console.dir);
 let currUser = "";
 let newUser = false;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // how to handle user's attempt to login
-app.post ('/login', async (req, res) => {
+app.post ('/api/login', async (req, res) => {
     let dataString = ""
 
     // parse data
@@ -75,25 +78,21 @@ app.post ('/login', async (req, res) => {
         if (user.length === 0) { // if the array is empty then there is not an existing user with that username
             currUser = data.username;
             newUser = true;
+            req.session.login = true;
 
             // create new user account with the username and password entered by adding it to database and then redirect to main app page
             client.db("a3").collection("users").insertOne({username: data.username, password: data.password})
             .then(result => {
                 console.log(result);
-                //res.redirect('/app.html');
                 res.json("success")
             }) .catch(error => {
                 console.error(error);
                 res.json("Creation Failure")
             })
-
-            req.session.login = true;
         } else if (user.length === 1) { // if there is one object in array, then user exists in database
             if (user[0].password === data.password) { // if the password matches the entered password, then successfully log user in and redirect to main page
                 currUser = data.username;
                 req.session.login = true;
-
-                //res.redirect('/app.html');
                 res.json("success")
             } else { // if password doesn't match, send error to login page and be ready for user to try again
                 req.session.login = false;
@@ -106,35 +105,13 @@ app.post ('/login', async (req, res) => {
     })
 })
 
-// when user tries to go to website, send logged-in users to main page and non-logged in users to login page
-app.get('/', (req, res) => {
-    if(req.session.login === true) {
-        res.redirect('/app.html');
-    } else {
-        res.redirect('/login.html');
-    }
-})
-
-// another catch to ensure user is logged in before accessing main page with data
-app.use(function(req, res, next) {
-    if( req.session.login === true )
-        next()
-    else
-        res.redirect('/login.html')
-})
-
-// path to main page
-app.get('/app.html', (req, res) => {
-    res.sendFile(__dirname + 'src/app.html')
-})
-
 // variables for data manipulation
 let collection
 let comps
 let nextID = 4; // track what the next entry ID will be
 
 // when user submits form that manipulates data handle it here
-app.post ('/submit', (req, res) => {
+app.post ('/api/submit', (req, res) => {
     let dataString = ""
 
     req.on( "data", function( data ) {
@@ -188,24 +165,52 @@ app.post ('/submit', (req, res) => {
 })
 
 // when main page is first loaded, send data attached to the logged-in user or tell front-end java that there is no data because the user is new
-app.get('/loadData', async (req, res) => {
+app.get('/api/loadData', async (req, res) => {
     if (newUser === true) {
         res.writeHead( 200, "OK", {"Content-Type": "text/plain" })
         res.end(JSON.stringify("new"))
     } else {
         collection = await client.db("a3").collection("competitions")
         comps = await collection.find({user: currUser}).toArray()
-        res.json(comps)
-
         nextID = comps.length + 1;
+        res.json(comps)
     }
 })
 
+// check login status (for front-end redirects)
+app.get('/api/checkLogin', (req, res) => {
+    const loggedIn = (req.session.login === true)
+    res.json({loggedIn})
+})
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'))
+})
 
-// app.get('/lib/app.js', (req, res) => {
-//     res.sendFile(__dirname + '/lib/app.js')
+// // when user tries to go to website, send logged-in users to main page and non-logged in users to login page
+// app.get('/', (req, res) => {
+//     if(req.session.login === true) {
+//         res.redirect('/app.html');
+//     } else {
+//         res.redirect('/login.html');
+//     }
+// })
+//
+// // another catch to ensure user is logged in before accessing main page with data
+// app.use(function(req, res, next) {
+//     if( req.session.login === true )
+//         next()
+//     else
+//         res.redirect('/login.html')
+// })
+//
+// // path to main page
+// app.get('/app.html', (req, res) => {
+//     res.sendFile(__dirname + 'src/app.html')
 // })
 
-//app.listen(3000)
-ViteExpress.listen( app, 3000 )
+
+app.listen(3000, () => {
+    console.log('Sever listening on port 3000')
+})
+//ViteExpress.listen( app, 3000 )
