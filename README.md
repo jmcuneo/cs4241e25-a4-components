@@ -1,31 +1,17 @@
-Assignment 4 - Components
+Katherine Tse Project A4 Readme
 ===
 
-For this assignment you will re-implement the client side portion of *either* A2 or A3 using either React or Svelte components. If you choose A3 you only need to use components for the data display / updating; you can leave your login UI as is.
+## Gymnastics Competition Personal Score Tracker
 
-[Svelte Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.svelte.md)  
-[React Tutorial](https://github.com/jmcuneo/cs4241-guides/blob/master/using.react.md)  
+Hosting Link: https://cs4241e25-a4-katherinetse.onrender.com
+- Note about Deployment Link from Render Server: "The instance will spin down with inactivity, which can delay requests by 50 seconds or more."
 
-This project can be implemented on any hosting service (Glitch, DigitalOcean, Heroku, etc.). However, you must include all files in your GitHub repo so that the course staff can view them.
+**Project Summary**: This project is an application that allows gymnasts to store their scores all in one place. To start, users can log into their account to see their data. They can also input their event scores by competition and the application will calculate the total (also known as All-Around) score. Users can delete and edit entries as well. The data is persistent using MongoDB. 
 
-Deliverables
----
+**Instructions**: The current user and login information is listed below:
+- Username: ktse
+- Password: thisismypassword1
 
-Do the following to complete this assignment:
+**Changes**: While the UI and user experience did not change, I rewrote all of the front end code, both the login and data display/maniulation, using React. I also added Vite to the server. 
 
-1. Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page on Glitch/Heroku/etc., it displays correctly.
-4. Ensure that your project has the proper naming scheme `a4-firstname-lastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below. Be sure to add *all* project files.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a4-firstname-lastname`.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your hosting link e.g. http://a4-charlieroberts.glitch.me
-
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
-
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+**Improve or Hinder?**: React really does improve functionality in my opinion. It made it a lot easier to share variables between different functions, smplify a lot of functions and reduce redundancy. However, I had an incredibly difficult time deploying the applicaiton. Most of my issue was getting the deployment to properly connect to the files outputted by building, but I was able to figure out how to get it to connect with help from one of my friend/past soft eng team memeber.
